@@ -54,11 +54,20 @@ flowchart TD
   AppRural <--> SimAPI
   IDEUI <--> SimAPI
   IDEUI <--> AppStore
+```
+
+## Demo
+
+<img width="1824" height="1023" alt="螢幕擷取畫面 2025-11-17 163335" src="https://github.com/user-attachments/assets/a0100983-2d19-483c-a656-0ca64d18a41b" />
+
+
+<img width="548" height="930" alt="螢幕擷取畫面 2025-11-17 163249" src="https://github.com/user-attachments/assets/77253203-5087-418b-a933-dbb5a25d2c59" />
 
 Main Components
 1. Digital Twin & Design IDE
 
 A web IDE + API backend to:
+
 
 Draw / import feeder topology (nodes, lines, switches, DER, EV chargers).
 
