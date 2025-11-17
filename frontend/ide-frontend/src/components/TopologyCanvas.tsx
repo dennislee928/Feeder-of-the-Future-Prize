@@ -1,4 +1,5 @@
 import { useCallback, useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import ReactFlow, {
   Node,
   Edge,
@@ -30,6 +31,7 @@ function TopologyCanvas({
   currentTopologyId,
   onTopologyIdChange
 }: TopologyCanvasProps) {
+  const { t } = useTranslation()
   const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
   const [isRunningSimulation, setIsRunningSimulation] = useState(false)
@@ -136,7 +138,7 @@ function TopologyCanvas({
   // 儲存拓樸
   const handleSaveTopology = useCallback(async () => {
     if (nodes.length === 0) {
-      alert('請先建立拓樸節點')
+      alert(t('topology.add_nodes_first'))
       return
     }
 
@@ -165,20 +167,20 @@ function TopologyCanvas({
       if (currentTopologyId) {
         // 更新現有拓樸
         await ideApi.updateTopology(currentTopologyId, topologyData)
-        alert('拓樸已更新')
+        alert(t('topology.topology_updated'))
       } else {
         // 建立新拓樸
         const result = await ideApi.createTopology(topologyData)
         onTopologyIdChange(result.id)
-        alert('拓樸已儲存')
+        alert(t('topology.topology_saved'))
       }
     } catch (error) {
       console.error('Save failed:', error)
-      alert('儲存失敗，請檢查網路連線')
+      alert(t('topology.save_failed'))
     } finally {
       setIsSaving(false)
     }
-  }, [nodes, edges, currentTopologyId, onTopologyIdChange])
+  }, [nodes, edges, currentTopologyId, onTopologyIdChange, t])
 
   // 載入拓樸
   const handleLoadTopology = useCallback(async () => {
@@ -186,7 +188,7 @@ function TopologyCanvas({
     try {
       const topologies = await ideApi.listTopologies()
       if (topologies.length === 0) {
-        alert('沒有可載入的拓樸')
+        alert(t('topology.no_topology'))
         return
       }
 
@@ -222,19 +224,20 @@ function TopologyCanvas({
 
       setNodes(flowNodes)
       setEdges(flowEdges)
-      alert(`已載入拓樸: ${topology.name}`)
+      onTopologyIdChange(topology.id)
+      alert(t('topology.topology_loaded'))
     } catch (error) {
       console.error('Load failed:', error)
-      alert('載入失敗，請檢查網路連線')
+      alert(t('topology.load_failed'))
     } finally {
       setIsLoading(false)
     }
-  }, [setNodes, setEdges, onTopologyIdChange])
+  }, [setNodes, setEdges, onTopologyIdChange, t])
 
   // 執行模擬
   const handleRunSimulation = useCallback(async () => {
     if (nodes.length === 0) {
-      alert('請先建立拓樸節點')
+      alert(t('topology.add_nodes_first'))
       return
     }
 
@@ -261,11 +264,11 @@ function TopologyCanvas({
       onSimulationComplete(result)
     } catch (error) {
       console.error('Simulation failed:', error)
-      alert('模擬執行失敗，請檢查網路連線與服務狀態')
+      alert(t('topology.simulation_failed'))
     } finally {
       setIsRunningSimulation(false)
     }
-  }, [nodes, edges, onSimulationComplete])
+  }, [nodes, edges, onSimulationComplete, t])
 
   return (
     <div className="topology-canvas" onDrop={onDrop} onDragOver={onDragOver}>
@@ -276,28 +279,29 @@ function TopologyCanvas({
             onClick={handleSaveTopology}
             disabled={isSaving || nodes.length === 0}
           >
-            {isSaving ? '儲存中...' : '儲存拓樸'}
+            {isSaving ? t('topology.saving') : t('topology.save')}
           </button>
           <button
             className="toolbar-button"
             onClick={handleLoadTopology}
             disabled={isLoading}
           >
-            {isLoading ? '載入中...' : '載入拓樸'}
+            {isLoading ? t('topology.loading') : t('topology.load')}
           </button>
         </div>
         <div className="toolbar-group">
           <button
             className="simulation-button"
             onClick={handleRunSimulation}
-            disabled={isRunningSimulation || nodes.length === 0}
+            disabled={isRunningSimulation}
+            title={nodes.length === 0 ? t('topology.simulation_tooltip_empty') : t('topology.simulation_tooltip')}
           >
-            {isRunningSimulation ? '執行中...' : '執行模擬 (Powerflow)'}
+            {isRunningSimulation ? t('topology.running') : t('topology.run_simulation')}
           </button>
           {simulationResult && (
             <div className="simulation-summary">
-              <span>平均電壓: {simulationResult.summary.average_voltage_pu.toFixed(4)} pu</span>
-              <span>最大載流率: {simulationResult.summary.max_line_loading_percent.toFixed(2)}%</span>
+              <span>{t('topology.average_voltage')}: {simulationResult.summary.average_voltage_pu.toFixed(4)} pu</span>
+              <span>{t('topology.max_line_loading')}: {simulationResult.summary.max_line_loading_percent.toFixed(2)}%</span>
             </div>
           )}
         </div>

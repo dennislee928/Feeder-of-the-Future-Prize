@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "Feeder IDE - Digital Twin & Design Platform"
+  },
+  "palette": {
+    "title": "Asset Panel",
+    "bus": "Bus",
+    "transformer": "Transformer",
+    "switch": "Switch",
+    "line": "Line",
+    "ev_charger": "EV Charger",
+    "der": "DER"
+  },
+  "topology": {
+    "save": "Save Topology",
+    "saving": "Saving...",
+    "load": "Load Topology",
+    "loading": "Loading...",
+    "run_simulation": "Run Simulation (Powerflow)",
+    "running": "Running...",
+    "simulation_tooltip_empty": "Please add nodes to canvas first",
+    "simulation_tooltip": "Run Powerflow simulation",
+    "add_nodes_first": "Please add nodes to canvas first (drag from asset panel)",
+    "simulation_failed": "Simulation failed, please check network connection and service status",
+    "topology_saved": "Topology saved",
+    "topology_updated": "Topology updated",
+    "topology_loaded": "Topology loaded",
+    "no_topology": "No topology available to load",
+    "load_failed": "Load failed, please check network connection",
+    "save_failed": "Save failed, please check network connection",
+    "average_voltage": "Average Voltage",
+    "max_line_loading": "Max Line Loading"
+  },
+  "properties": {
+    "title": "Properties Panel",
+    "empty": "Select a node to view properties",
+    "id": "ID",
+    "name": "Name",
+    "type": "Type",
+    "simulation_results": "Simulation Results",
+    "voltage": "Voltage (pu)",
+    "voltage_kv": "Voltage (kV)",
+    "voltage_deviation": "Voltage Deviation (%)",
+    "status": "Status",
+    "status_normal": "Normal",
+    "status_warning": "Warning",
+    "status_critical": "Critical"
+  }
+}
+

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { PowerflowResult } from '../api/simApi'
 import './PropertiesPanel.css'
 
@@ -15,6 +16,7 @@ interface NodeProperties {
 }
 
 function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
+  const { t } = useTranslation()
   const [properties, setProperties] = useState<NodeProperties | null>(null)
   const [nodeSimulationData, setNodeSimulationData] = useState<any>(null)
 
@@ -44,9 +46,9 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
   if (!nodeId || !properties) {
     return (
       <div className="properties-panel">
-        <h2 className="properties-title">屬性面板</h2>
+        <h2 className="properties-title">{t('properties.title')}</h2>
         <div className="properties-empty">
-          <p>請選擇一個節點以查看屬性</p>
+          <p>{t('properties.empty')}</p>
         </div>
       </div>
     )
@@ -54,10 +56,10 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
 
   return (
     <div className="properties-panel">
-      <h2 className="properties-title">屬性面板</h2>
+      <h2 className="properties-title">{t('properties.title')}</h2>
       <div className="properties-content">
         <div className="property-group">
-          <label className="property-label">ID</label>
+          <label className="property-label">{t('properties.id')}</label>
           <input
             type="text"
             className="property-input"
@@ -66,7 +68,7 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
           />
         </div>
         <div className="property-group">
-          <label className="property-label">名稱</label>
+          <label className="property-label">{t('properties.name')}</label>
           <input
             type="text"
             className="property-input"
@@ -77,7 +79,7 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
           />
         </div>
         <div className="property-group">
-          <label className="property-label">類型</label>
+          <label className="property-label">{t('properties.type')}</label>
           <input
             type="text"
             className="property-input"
@@ -88,9 +90,9 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
 
         {nodeSimulationData && (
           <>
-            <div className="property-divider">模擬結果</div>
+            <div className="property-divider">{t('properties.simulation_results')}</div>
             <div className="property-group">
-              <label className="property-label">電壓 (pu)</label>
+              <label className="property-label">{t('properties.voltage')}</label>
               <input
                 type="text"
                 className="property-input"
@@ -99,7 +101,7 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
               />
             </div>
             <div className="property-group">
-              <label className="property-label">電壓 (kV)</label>
+              <label className="property-label">{t('properties.voltage_kv')}</label>
               <input
                 type="text"
                 className="property-input"
@@ -108,7 +110,7 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
               />
             </div>
             <div className="property-group">
-              <label className="property-label">電壓偏差 (%)</label>
+              <label className="property-label">{t('properties.voltage_deviation')}</label>
               <input
                 type="text"
                 className={`property-input ${
@@ -123,7 +125,7 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
               />
             </div>
             <div className="property-group">
-              <label className="property-label">狀態</label>
+              <label className="property-label">{t('properties.status')}</label>
               <input
                 type="text"
                 className={`property-input ${
@@ -135,10 +137,10 @@ function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
                 }`}
                 value={
                   nodeSimulationData.status === 'critical'
-                    ? '嚴重'
+                    ? t('properties.status_critical')
                     : nodeSimulationData.status === 'warning'
-                    ? '警告'
-                    : '正常'
+                    ? t('properties.status_warning')
+                    : t('properties.status_normal')
                 }
                 readOnly
               />

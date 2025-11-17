@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "Feeder IDE - 數位孿生與設計平台"
+  },
+  "palette": {
+    "title": "資產面板",
+    "bus": "匯流排",
+    "transformer": "變壓器",
+    "switch": "開關",
+    "line": "線路",
+    "ev_charger": "電動車充電樁",
+    "der": "分散式能源"
+  },
+  "topology": {
+    "save": "儲存拓樸",
+    "saving": "儲存中...",
+    "load": "載入拓樸",
+    "loading": "載入中...",
+    "run_simulation": "執行模擬 (Powerflow)",
+    "running": "執行中...",
+    "simulation_tooltip_empty": "請先添加節點到畫布上",
+    "simulation_tooltip": "執行 Powerflow 模擬",
+    "add_nodes_first": "請先添加節點到畫布上（從左側資產面板拖拽節點）",
+    "simulation_failed": "模擬執行失敗，請檢查網路連線與服務狀態",
+    "topology_saved": "拓樸已儲存",
+    "topology_updated": "拓樸已更新",
+    "topology_loaded": "拓樸已載入",
+    "no_topology": "沒有可載入的拓樸",
+    "load_failed": "載入失敗，請檢查網路連線",
+    "save_failed": "儲存失敗，請檢查網路連線",
+    "average_voltage": "平均電壓",
+    "max_line_loading": "最大載流率"
+  },
+  "properties": {
+    "title": "屬性面板",
+    "empty": "請選擇一個節點以查看屬性",
+    "id": "ID",
+    "name": "名稱",
+    "type": "類型",
+    "simulation_results": "模擬結果",
+    "voltage": "電壓 (pu)",
+    "voltage_kv": "電壓 (kV)",
+    "voltage_deviation": "電壓偏差 (%)",
+    "status": "狀態",
+    "status_normal": "正常",
+    "status_warning": "警告",
+    "status_critical": "嚴重"
+  }
+}
+

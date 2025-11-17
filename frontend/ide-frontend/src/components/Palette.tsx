@@ -1,28 +1,30 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import './Palette.css'
 
 interface PaletteItem {
   id: string
-  name: string
+  nameKey: string
   icon: string
   type: string
 }
 
 const paletteItems: PaletteItem[] = [
-  { id: 'bus', name: 'Bus', icon: '⚡', type: 'bus' },
-  { id: 'transformer', name: 'Transformer', icon: '🔌', type: 'transformer' },
-  { id: 'switch', name: 'Switch', icon: '🔀', type: 'switch' },
-  { id: 'line', name: 'Line', icon: '📏', type: 'line' },
-  { id: 'ev_charger', name: 'EV Charger', icon: '🔋', type: 'ev_charger' },
-  { id: 'der', name: 'DER', icon: '☀️', type: 'der' },
+  { id: 'bus', nameKey: 'bus', icon: '⚡', type: 'bus' },
+  { id: 'transformer', nameKey: 'transformer', icon: '🔌', type: 'transformer' },
+  { id: 'switch', nameKey: 'switch', icon: '🔀', type: 'switch' },
+  { id: 'line', nameKey: 'line', icon: '📏', type: 'line' },
+  { id: 'ev_charger', nameKey: 'ev_charger', icon: '🔋', type: 'ev_charger' },
+  { id: 'der', nameKey: 'der', icon: '☀️', type: 'der' },
 ]
 
 function Palette() {
+  const { t } = useTranslation()
   const [selectedItem, setSelectedItem] = useState<string | null>(null)
 
   return (
     <div className="palette">
-      <h2 className="palette-title">資產面板</h2>
+      <h2 className="palette-title">{t('palette.title')}</h2>
       <div className="palette-items">
         {paletteItems.map((item) => (
           <div
@@ -35,7 +37,7 @@ function Palette() {
             }}
           >
             <span className="palette-item-icon">{item.icon}</span>
-            <span className="palette-item-name">{item.name}</span>
+            <span className="palette-item-name">{t(`palette.${item.nameKey}`)}</span>
           </div>
         ))}
       </div>

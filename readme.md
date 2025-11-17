@@ -196,19 +196,19 @@ docker-compose up --build
 
 Once started, the following services will be available:
 
-- **IDE Frontend**: http://localhost:3000
-- **Feeder IDE API**: http://localhost:8080
+- **IDE Frontend**: http://localhost:3001
+- **Feeder IDE API**: http://localhost:8090
 - **Simulation Engine**: http://localhost:8081
 - **Feeder OS Controller**: http://localhost:8082
 - **DER + EV Orchestrator**: http://localhost:8083
 - **Rural Resilience Engine**: http://localhost:8084
 - **Security Gateway**: http://localhost:8443
 - **Telemetry Collector**: http://localhost:8085
-- **MQTT Broker**: localhost:1883
+- **MQTT Broker**: localhost:1884 (external) or mqtt:1883 (internal)
 
 ## Demo Flow
 
-1. **Design Topology**: Open IDE at http://localhost:3000
+1. **Design Topology**: Open IDE at http://localhost:3001
    - Drag and drop assets from the palette
    - Connect nodes with lines
    - Save topology
@@ -223,6 +223,15 @@ Once started, the following services will be available:
      -H "Content-Type: application/json" \
      -d '{"name": "EV Charger 1", "rated_power_kw": 50}'
    ```
+
+## Important Notes
+
+⚠️ **Port Changes**: Due to port conflicts, some services use different ports:
+- Frontend: **3001** (instead of 3000)
+- Feeder IDE API: **8090** (instead of 8080)
+- MQTT Broker: **1884** (external, instead of 1883)
+
+Use the correct ports when accessing services directly.
 
 4. **Monitor**: Check telemetry collector for logs and anomalies
    ```bash

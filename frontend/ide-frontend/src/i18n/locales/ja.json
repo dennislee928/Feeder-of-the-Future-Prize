@@ -1,0 +1,50 @@
+{
+  "app": {
+    "title": "Feeder IDE - デジタルツイン & 設計プラットフォーム"
+  },
+  "palette": {
+    "title": "資産パネル",
+    "bus": "バス",
+    "transformer": "変圧器",
+    "switch": "スイッチ",
+    "line": "ライン",
+    "ev_charger": "EV充電器",
+    "der": "分散型エネルギー"
+  },
+  "topology": {
+    "save": "トポロジーを保存",
+    "saving": "保存中...",
+    "load": "トポロジーを読み込む",
+    "loading": "読み込み中...",
+    "run_simulation": "シミュレーション実行 (Powerflow)",
+    "running": "実行中...",
+    "simulation_tooltip_empty": "まずノードをキャンバスに追加してください",
+    "simulation_tooltip": "Powerflowシミュレーションを実行",
+    "add_nodes_first": "まずノードをキャンバスに追加してください（資産パネルからドラッグ）",
+    "simulation_failed": "シミュレーションが失敗しました。ネットワーク接続とサービス状態を確認してください",
+    "topology_saved": "トポロジーが保存されました",
+    "topology_updated": "トポロジーが更新されました",
+    "topology_loaded": "トポロジーが読み込まれました",
+    "no_topology": "読み込むトポロジーがありません",
+    "load_failed": "読み込みが失敗しました。ネットワーク接続を確認してください",
+    "save_failed": "保存が失敗しました。ネットワーク接続を確認してください",
+    "average_voltage": "平均電圧",
+    "max_line_loading": "最大線路負荷率"
+  },
+  "properties": {
+    "title": "プロパティパネル",
+    "empty": "ノードを選択してプロパティを表示",
+    "id": "ID",
+    "name": "名前",
+    "type": "タイプ",
+    "simulation_results": "シミュレーション結果",
+    "voltage": "電圧 (pu)",
+    "voltage_kv": "電圧 (kV)",
+    "voltage_deviation": "電圧偏差 (%)",
+    "status": "状態",
+    "status_normal": "正常",
+    "status_warning": "警告",
+    "status_critical": "重大"
+  }
+}
+

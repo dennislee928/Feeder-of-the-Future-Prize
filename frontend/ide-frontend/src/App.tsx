@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import TopologyCanvas from './components/TopologyCanvas'
 import Palette from './components/Palette'
 import PropertiesPanel from './components/PropertiesPanel'
+import LanguageSwitcher from './components/LanguageSwitcher'
 import { PowerflowResult } from './api/simApi'
 import './App.css'
 
 function App() {
+  const { t } = useTranslation()
   const [selectedNode, setSelectedNode] = useState<string | null>(null)
   const [simulationResult, setSimulationResult] = useState<PowerflowResult | null>(null)
   const [currentTopologyId, setCurrentTopologyId] = useState<string | null>(null)
@@ -13,7 +16,8 @@ function App() {
   return (
     <div className="app-container">
       <div className="app-header">
-        <h1>Feeder IDE - Digital Twin & Design Platform</h1>
+        <h1>{t('app.title')}</h1>
+        <LanguageSwitcher />
       </div>
       <div className="app-content">
         <div className="app-sidebar-left">
