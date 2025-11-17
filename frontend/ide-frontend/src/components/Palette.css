@@ -1,0 +1,54 @@
+.palette {
+  padding: 1rem;
+}
+
+.palette-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #444;
+}
+
+.palette-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.palette-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 4px;
+  cursor: grab;
+  transition: all 0.2s;
+}
+
+.palette-item:hover {
+  background-color: #3a3a3a;
+  border-color: #555;
+}
+
+.palette-item.selected {
+  background-color: #4a5568;
+  border-color: #63b3ed;
+}
+
+.palette-item:active {
+  cursor: grabbing;
+}
+
+.palette-item-icon {
+  font-size: 1.5rem;
+}
+
+.palette-item-name {
+  color: #fff;
+  font-size: 0.9rem;
+}
+

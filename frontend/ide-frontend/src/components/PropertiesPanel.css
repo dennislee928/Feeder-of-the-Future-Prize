@@ -1,0 +1,57 @@
+.properties-panel {
+  padding: 1rem;
+}
+
+.properties-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #444;
+}
+
+.properties-empty {
+  padding: 2rem;
+  text-align: center;
+  color: #888;
+}
+
+.properties-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.property-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.property-label {
+  font-size: 0.875rem;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.property-input {
+  padding: 0.5rem;
+  background-color: #333;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.property-input:focus {
+  outline: none;
+  border-color: #63b3ed;
+}
+
+.property-input:read-only {
+  background-color: #2a2a2a;
+  color: #888;
+  cursor: not-allowed;
+}
+

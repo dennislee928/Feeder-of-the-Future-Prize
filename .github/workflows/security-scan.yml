@@ -1,0 +1,132 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    # Run weekly on Monday at 00:00 UTC
+    - cron: '0 0 * * 1'
+
+jobs:
+  trivy-scan:
+    name: Trivy Security Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - feeder-ide-api
+          - feeder-sim-engine
+          - feeder-os-controller
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: './services/${{ matrix.service }}'
+          format: 'sarif'
+          output: 'trivy-results-${{ matrix.service }}.sarif'
+          severity: 'CRITICAL,HIGH'
+      
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results-${{ matrix.service }}.sarif'
+
+  sast-go:
+    name: SAST Go (gosec)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./services/feeder-ide-api
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+      
+      - name: Run gosec
+        uses: securego/gosec@master
+        with:
+          args: '-no-fail -fmt json -out gosec-report.json ./...'
+      
+      - name: Upload gosec results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gosec-report
+          path: ./services/feeder-ide-api/gosec-report.json
+          retention-days: 30
+
+  sast-python:
+    name: SAST Python (bandit)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./services/feeder-sim-engine
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install bandit
+        run: pip install bandit[toml]
+      
+      - name: Run bandit
+        run: |
+          bandit -r src/ -f json -o bandit-report.json || true
+      
+      - name: Upload bandit results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bandit-report
+          path: ./services/feeder-sim-engine/bandit-report.json
+          retention-days: 30
+
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Trivy dependency scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
+          exit-code: '0'
+      
+      - name: Scan Go dependencies
+        if: hashFiles('services/feeder-ide-api/go.mod') != ''
+        run: |
+          cd services/feeder-ide-api
+          go list -json -deps | nancy sleuth || true
+      
+      - name: Scan Python dependencies
+        if: hashFiles('services/feeder-sim-engine/requirements.txt') != ''
+        run: |
+          pip install pip-audit
+          pip-audit -r services/feeder-sim-engine/requirements.txt || true
+      
+      - name: Scan Node.js dependencies
+        if: hashFiles('frontend/ide-frontend/package.json') != ''
+        run: |
+          cd frontend/ide-frontend
+          npm audit --audit-level=moderate || true
+
