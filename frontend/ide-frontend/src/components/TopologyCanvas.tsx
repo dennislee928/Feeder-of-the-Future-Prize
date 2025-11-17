@@ -9,7 +9,6 @@ import ReactFlow, {
   Background,
   Controls,
   MiniMap,
-  NodeTypes,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 import { simApi, PowerflowResult } from '../api/simApi'
@@ -158,7 +157,7 @@ function TopologyCanvas({
           id: edge.id,
           from_node_id: edge.source,
           to_node_id: edge.target,
-          name: edge.label || '',
+          name: typeof edge.label === 'string' ? edge.label : '',
           properties: {},
         })),
       }
@@ -253,6 +252,7 @@ function TopologyCanvas({
           id: edge.id,
           from_node_id: edge.source,
           to_node_id: edge.target,
+          name: typeof edge.label === 'string' ? edge.label : undefined,
         })),
         profile_type: 'suburban', // 預設值，之後可以從 UI 選擇
       }

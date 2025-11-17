@@ -1,0 +1,160 @@
+services:
+  # MQTT Broker
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    container_name: feeder-mqtt
+    ports:
+      - "1884:1883"  # 使用 1884 避免與本地 MQTT 衝突
+      - "9001:9001"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    networks:
+      - feeder-network
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_pub -h localhost -t test -m test || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Feeder IDE API
+  feeder-ide-api:
+    build:
+      context: ../services/feeder-ide-api
+      dockerfile: Dockerfile
+    container_name: feeder-ide-api
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+    networks:
+      - feeder-network
+    depends_on:
+      - mqtt
+
+  # Feeder Sim Engine
+  feeder-sim-engine:
+    build:
+      context: ../services/feeder-sim-engine
+      dockerfile: Dockerfile
+    container_name: feeder-sim-engine
+    ports:
+      - "8081:8081"
+    networks:
+      - feeder-network
+
+  # Feeder OS Controller
+  feeder-os-controller:
+    build:
+      context: ../services/feeder-os-controller
+      dockerfile: Dockerfile
+    container_name: feeder-os-controller
+    ports:
+      - "8082:8082"
+    environment:
+      - PORT=8082
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+      - MQTT_CLIENT_ID=feeder-os-controller
+    networks:
+      - feeder-network
+    depends_on:
+      mqtt:
+        condition: service_healthy
+
+  # DER + EV Orchestrator
+  app-der-ev-orchestrator:
+    build:
+      context: ../services/apps/app-der-ev-orchestrator
+      dockerfile: Dockerfile
+    container_name: app-der-ev-orchestrator
+    ports:
+      - "8083:8083"
+    environment:
+      - FEEDER_ID=feeder-001
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+    networks:
+      - feeder-network
+    depends_on:
+      mqtt:
+        condition: service_healthy
+      feeder-os-controller:
+        condition: service_started
+
+  # Rural Resilience Engine
+  app-rural-resilience:
+    build:
+      context: ../services/apps/app-rural-resilience
+      dockerfile: Dockerfile
+    container_name: app-rural-resilience
+    ports:
+      - "8084:8084"
+    networks:
+      - feeder-network
+
+  # Security Gateway
+  security-gateway:
+    build:
+      context: ../services/security-fabric/security-gateway
+      dockerfile: Dockerfile
+    container_name: security-gateway
+    ports:
+      - "8443:8443"
+    environment:
+      - PORT=8443
+    networks:
+      - feeder-network
+    depends_on:
+      - feeder-ide-api
+      - feeder-os-controller
+
+  # Telemetry Collector
+  telemetry-collector:
+    build:
+      context: ../services/security-fabric/telemetry-collector
+      dockerfile: Dockerfile
+    container_name: telemetry-collector
+    ports:
+      - "8085:8085"
+    networks:
+      - feeder-network
+
+  # Dummy App
+  dummy-app:
+    build:
+      context: ../services/apps/dummy-app
+      dockerfile: Dockerfile
+    container_name: dummy-app
+    environment:
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
+      - FEEDER_ID=feeder-001
+      - CLIENT_ID=dummy-app
+    networks:
+      - feeder-network
+    depends_on:
+      mqtt:
+        condition: service_healthy
+
+  # Frontend
+  ide-frontend:
+    build:
+      context: ../frontend/ide-frontend
+      dockerfile: Dockerfile
+    container_name: ide-frontend
+    ports:
+      - "3001:80"  # 使用 3001 避免與本地服務衝突
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8080/api/v1
+      - VITE_SIM_API_BASE_URL=http://localhost:8081
+    networks:
+      - feeder-network
+    depends_on:
+      - feeder-ide-api
+      - feeder-sim-engine
+
+networks:
+  feeder-network:
+    driver: bridge
+

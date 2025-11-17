@@ -168,19 +168,66 @@ Hackable codebase for experiments
 
 Strong DevSecOps practices from day one
 
-Quick Start (planned)
+Quick Start
 
-⚠️ Until code exists, this is aspirational. Adjust as implementation evolves.
+## Prerequisites
 
-# 1. Clone
+- Docker and Docker Compose
+- Go 1.21+ (for local development)
+- Python 3.11+ (for local development)
+- Node.js 20+ (for local development)
+
+## Start the Stack
+
+```bash
+# 1. Clone the repository
 git clone https://github.com/<your-username>/feeder-of-the-future-platform.git
 cd feeder-of-the-future-platform
 
-# 2. Start dev stack (backend + frontend + minimal edge runtime)
+# 2. Start all services
+cd deploy
 docker-compose up --build
 
 # 3. Open IDE
 # Visit http://localhost:3000 for the Digital Twin & Design IDE
+```
+
+## Services
+
+Once started, the following services will be available:
+
+- **IDE Frontend**: http://localhost:3000
+- **Feeder IDE API**: http://localhost:8080
+- **Simulation Engine**: http://localhost:8081
+- **Feeder OS Controller**: http://localhost:8082
+- **DER + EV Orchestrator**: http://localhost:8083
+- **Rural Resilience Engine**: http://localhost:8084
+- **Security Gateway**: http://localhost:8443
+- **Telemetry Collector**: http://localhost:8085
+- **MQTT Broker**: localhost:1883
+
+## Demo Flow
+
+1. **Design Topology**: Open IDE at http://localhost:3000
+   - Drag and drop assets from the palette
+   - Connect nodes with lines
+   - Save topology
+
+2. **Run Simulation**: Click "Run Simulation" button
+   - View voltage deviations on nodes
+   - Check loading percentages on lines
+
+3. **Register Assets**: Use DER + EV Orchestrator API
+   ```bash
+   curl -X POST http://localhost:8083/api/v1/assets/ev-chargers \
+     -H "Content-Type: application/json" \
+     -d '{"name": "EV Charger 1", "rated_power_kw": 50}'
+   ```
+
+4. **Monitor**: Check telemetry collector for logs and anomalies
+   ```bash
+   curl http://localhost:8085/api/v1/anomalies/summary
+   ```
 
 Repository Layout (preview)
 

@@ -4,6 +4,8 @@ Dummy App Example
 """
 import json
 import os
+import sys
+import socket
 import time
 import paho.mqtt.client as mqtt
 
@@ -57,15 +59,43 @@ def main():
     client.on_connect = on_connect
     client.on_message = on_message
 
-    # 連線到 broker
-    try:
-        client.connect(MQTT_BROKER, MQTT_PORT, 60)
-        client.loop_forever()
-    except KeyboardInterrupt:
-        print("\nShutting down...")
-        client.disconnect()
-    except Exception as e:
-        print(f"Error: {e}")
+    # 連線到 broker（重試邏輯）
+    max_retries = 10
+    retry_delay = 2
+    connected = False
+    
+    for attempt in range(max_retries):
+        try:
+            print(f"Attempting to connect to MQTT broker (attempt {attempt + 1}/{max_retries})...")
+            client.connect(MQTT_BROKER, MQTT_PORT, 60)
+            print(f"Successfully connected to MQTT broker!")
+            connected = True
+            break
+        except socket.gaierror as e:
+            if attempt < max_retries - 1:
+                print(f"DNS resolution failed: {e}")
+                print(f"Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+            else:
+                print(f"Failed to connect after {max_retries} attempts. Exiting...")
+                sys.exit(1)
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"Connection failed: {e}")
+                print(f"Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+            else:
+                print(f"Failed to connect after {max_retries} attempts: {e}")
+                sys.exit(1)
+    
+    if connected:
+        try:
+            client.loop_forever()
+        except KeyboardInterrupt:
+            print("\nShutting down...")
+            client.disconnect()
+        except Exception as e:
+            print(f"Error during operation: {e}")
 
 
 if __name__ == "__main__":

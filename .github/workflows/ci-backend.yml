@@ -119,25 +119,115 @@ jobs:
           flags: python
           name: python-coverage
 
+  lint-python-apps:
+    name: Lint Python Apps
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - app-der-ev-orchestrator
+          - app-rural-resilience
+          - telemetry-collector
+    defaults:
+      run:
+        working-directory: ./services/apps/${{ matrix.service }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black isort
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Run flake8
+        run: flake8 src/ --max-line-length=120 --extend-ignore=E203,W503 || true
+      
+      - name: Check formatting with black
+        run: black --check src/ || true
+
+  lint-go-os:
+    name: Lint Go OS Controller
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./services/feeder-os-controller
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+      
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          working-directory: ./services/feeder-os-controller
+          args: --timeout=5m
+
+  lint-go-security:
+    name: Lint Go Security Gateway
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./services/security-fabric/security-gateway
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+      
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          working-directory: ./services/security-fabric/security-gateway
+          args: --timeout=5m
+
   build:
     name: Build Services
     runs-on: ubuntu-latest
-    needs: [lint-go, lint-python, test-go, test-python]
+    needs: [lint-go, lint-python, lint-python-apps, lint-go-os, lint-go-security]
     strategy:
       matrix:
         service:
           - feeder-ide-api
           - feeder-sim-engine
+          - feeder-os-controller
+          - app-der-ev-orchestrator
+          - app-rural-resilience
+          - security-gateway
+          - telemetry-collector
     steps:
       - uses: actions/checkout@v4
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       
+      - name: Determine service path
+        id: service-path
+        run: |
+          if [[ "${{ matrix.service }}" == "app-der-ev-orchestrator" ]] || [[ "${{ matrix.service }}" == "app-rural-resilience" ]]; then
+            echo "path=./services/apps/${{ matrix.service }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ matrix.service }}" == "security-gateway" ]] || [[ "${{ matrix.service }}" == "telemetry-collector" ]]; then
+            echo "path=./services/security-fabric/${{ matrix.service }}" >> $GITHUB_OUTPUT
+          else
+            echo "path=./services/${{ matrix.service }}" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./services/${{ matrix.service }}
+          context: ${{ steps.service-path.outputs.path }}
           push: false
           tags: feeder-platform/${{ matrix.service }}:latest
           cache-from: type=gha

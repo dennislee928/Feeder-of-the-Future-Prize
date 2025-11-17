@@ -3,9 +3,9 @@ module github.com/feeder-platform/feeder-os-controller
 go 1.21
 
 require (
+	github.com/eclipse/paho.mqtt.golang v1.4.3
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.5.0
-	github.com/eclipse/paho.mqtt.golang v1.4.3
 )
 
 require (
@@ -36,4 +36,3 @@ require (
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-

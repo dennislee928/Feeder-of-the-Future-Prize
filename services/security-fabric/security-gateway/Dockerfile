@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o ide-api ./cmd/ide-api
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o sec-gateway ./cmd/sec-gateway
 
 # Runtime stage
 FROM alpine:latest
@@ -22,11 +22,11 @@ RUN apk --no-cache add ca-certificates tzdata
 WORKDIR /root/
 
 # Copy the binary from builder
-COPY --from=builder /app/ide-api .
+COPY --from=builder /app/sec-gateway .
 
 # Expose port
-EXPOSE 8080
+EXPOSE 8443
 
 # Run the application
-CMD ["./ide-api"]
+CMD ["./sec-gateway"]
 
