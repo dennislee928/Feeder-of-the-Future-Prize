@@ -58,6 +58,9 @@ flowchart TD
 
 ## Demo
 
+![2](https://github.com/user-attachments/assets/1a0b67a3-ec29-4341-a6c4-44e53b7d79f8)
+
+
 <img width="1824" height="1023" alt="螢幕擷取畫面 2025-11-17 163335" src="https://github.com/user-attachments/assets/a0100983-2d19-483c-a656-0ca64d18a41b" />
 
 
