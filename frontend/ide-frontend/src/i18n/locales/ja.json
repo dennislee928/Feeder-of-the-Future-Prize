@@ -1,6 +1,10 @@
 {
   "app": {
-    "title": "Feeder IDE - デジタルツイン & 設計プラットフォーム"
+    "title": "Feeder IDE - デジタルツイン & 設計プラットフォーム",
+    "mode": {
+      "design": "設計モード",
+      "security": "セキュリティテスト"
+    }
   },
   "palette": {
     "title": "資産パネル",
@@ -45,6 +49,63 @@
     "status_normal": "正常",
     "status_warning": "警告",
     "status_critical": "重大"
+  },
+  "security": {
+    "no_topology": "読み込むトポロジーがありません",
+    "topology_loaded": "トポロジーが読み込まれました",
+    "load_failed": "読み込みが失敗しました。ネットワーク接続を確認してください",
+    "add_nodes_first": "まずノードをキャンバスに追加してください",
+    "select_scenarios": "少なくとも1つの攻撃シナリオを選択してください",
+    "test_failed": "ペネトレーションテストが失敗しました。ネットワーク接続とサービス状態を確認してください",
+    "loading": "読み込み中...",
+    "load_topology": "トポロジーを読み込む",
+    "running": "実行中...",
+    "run_penetration_test": "ペネトレーションテストを実行",
+    "run_test": "ペネトレーションテストを実行",
+    "total_attacks": "総攻撃数",
+    "successful": "成功",
+    "critical": "重大な脆弱性",
+    "layer": {
+      "application": "アプリケーション層 (Layer 7)",
+      "presentation": "プレゼンテーション層 (Layer 6)",
+      "session": "セッション層 (Layer 5)",
+      "transport": "トランスポート層 (Layer 4)",
+      "network": "ネットワーク層 (Layer 3)",
+      "datalink": "データリンク層 (Layer 2)",
+      "physical": "物理層 (Layer 1)"
+    },
+    "severity": {
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "critical": "重大"
+    },
+    "scenarios": {
+      "title": "攻撃シナリオ",
+      "loading": "読み込み中...",
+      "selected": "選択済み",
+      "select_all": "すべて選択",
+      "deselect_all": "すべて解除"
+    },
+    "report": {
+      "title": "セキュリティレポート",
+      "empty": "ペネトレーションテストを実行すると、結果がここに表示されます",
+      "summary": "概要",
+      "total_attacks": "総攻撃数",
+      "successful": "成功",
+      "failed": "失敗",
+      "critical_vulns": "重大な脆弱性",
+      "affected_nodes": "影響を受けたノード",
+      "affected_lines": "影響を受けた線路",
+      "attacks": "攻撃詳細",
+      "impact": "影響",
+      "attack_path": "攻撃パス",
+      "affected_assets": "影響を受けた資産",
+      "nodes": "ノード",
+      "lines": "線路",
+      "recommendations": "推奨事項",
+      "blocked": "ブロック済み"
+    }
   }
 }
 

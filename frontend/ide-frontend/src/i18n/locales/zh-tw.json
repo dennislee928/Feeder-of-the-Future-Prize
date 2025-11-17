@@ -1,6 +1,10 @@
 {
   "app": {
-    "title": "Feeder IDE - 數位孿生與設計平台"
+    "title": "Feeder IDE - 數位孿生與設計平台",
+    "mode": {
+      "design": "設計模式",
+      "security": "安全測試"
+    }
   },
   "palette": {
     "title": "資產面板",
@@ -45,6 +49,63 @@
     "status_normal": "正常",
     "status_warning": "警告",
     "status_critical": "嚴重"
+  },
+  "security": {
+    "no_topology": "沒有可載入的拓樸",
+    "topology_loaded": "拓樸已載入",
+    "load_failed": "載入失敗，請檢查網路連線",
+    "add_nodes_first": "請先添加節點到畫布上",
+    "select_scenarios": "請選擇至少一個攻擊場景",
+    "test_failed": "滲透測試失敗，請檢查網路連線與服務狀態",
+    "loading": "載入中...",
+    "load_topology": "載入拓樸",
+    "running": "執行中...",
+    "run_penetration_test": "執行滲透測試",
+    "run_test": "執行滲透測試",
+    "total_attacks": "總攻擊數",
+    "successful": "成功",
+    "critical": "嚴重漏洞",
+    "layer": {
+      "application": "應用層 (Layer 7)",
+      "presentation": "表示層 (Layer 6)",
+      "session": "會話層 (Layer 5)",
+      "transport": "傳輸層 (Layer 4)",
+      "network": "網路層 (Layer 3)",
+      "datalink": "數據鏈路層 (Layer 2)",
+      "physical": "物理層 (Layer 1)"
+    },
+    "severity": {
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "critical": "嚴重"
+    },
+    "scenarios": {
+      "title": "攻擊場景",
+      "loading": "載入中...",
+      "selected": "已選擇",
+      "select_all": "全選",
+      "deselect_all": "取消全選"
+    },
+    "report": {
+      "title": "安全報告",
+      "empty": "執行滲透測試後，結果將顯示在這裡",
+      "summary": "摘要",
+      "total_attacks": "總攻擊數",
+      "successful": "成功",
+      "failed": "失敗",
+      "critical_vulns": "嚴重漏洞",
+      "affected_nodes": "受影響節點",
+      "affected_lines": "受影響線路",
+      "attacks": "攻擊詳情",
+      "impact": "影響",
+      "attack_path": "攻擊路徑",
+      "affected_assets": "受影響資產",
+      "nodes": "節點",
+      "lines": "線路",
+      "recommendations": "修復建議",
+      "blocked": "已阻擋"
+    }
   }
 }
 

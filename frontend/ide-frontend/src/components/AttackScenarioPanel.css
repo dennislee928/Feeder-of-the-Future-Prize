@@ -1,0 +1,163 @@
+.attack-scenario-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+.panel-header {
+  padding: 1rem;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.panel-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #fff;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s;
+}
+
+.action-button:hover {
+  background-color: #2563eb;
+}
+
+.selected-count {
+  padding: 0.75rem 1rem;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.scenarios-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.loading {
+  padding: 2rem;
+  text-align: center;
+  color: #aaa;
+}
+
+.layer-group {
+  margin-bottom: 0.5rem;
+}
+
+.layer-header {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.layer-header:hover {
+  background-color: #2a2a2a;
+}
+
+.layer-name {
+  flex: 1;
+  font-weight: 600;
+  color: #fff;
+}
+
+.layer-count {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+.layer-toggle {
+  color: #aaa;
+  font-size: 0.8rem;
+}
+
+.layer-scenarios {
+  padding: 0.5rem 0;
+}
+
+.scenario-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.scenario-item:hover {
+  background-color: #2a2a2a;
+  border-color: #444;
+}
+
+.scenario-item.selected {
+  background-color: #1e3a5f;
+  border-color: #3b82f6;
+}
+
+.scenario-item input[type='checkbox'] {
+  margin-right: 0.75rem;
+  margin-top: 0.25rem;
+  cursor: pointer;
+}
+
+.scenario-content {
+  flex: 1;
+}
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.scenario-name {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.severity-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.scenario-description {
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.4;
+}
+

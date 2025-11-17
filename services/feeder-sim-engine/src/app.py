@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.powerflow_stub import PowerflowStub
 from src.reliability_stub import ReliabilityStub
+from src.penetration_stub import PenetrationStub
 
 app = FastAPI(
     title="Feeder Simulation Engine",
@@ -25,6 +26,7 @@ app.add_middleware(
 # 初始化 stub 服務
 powerflow_stub = PowerflowStub()
 reliability_stub = ReliabilityStub()
+penetration_stub = PenetrationStub()
 
 
 @app.get("/health")
@@ -60,6 +62,34 @@ async def simulate_reliability(request: dict):
     
     result = reliability_stub.run_reliability_analysis(topology, parameters)
     return result
+
+
+@app.post("/simulate/penetration")
+async def simulate_penetration(request: dict):
+    """
+    執行滲透測試（stub 版本）
+    
+    接收拓樸 JSON + 攻擊場景列表，回傳攻擊結果
+    """
+    topology = request.get("topology", {})
+    attack_scenarios = request.get("attack_scenarios", [])
+    target_nodes = request.get("target_nodes", None)
+    
+    result = penetration_stub.run_penetration_test(
+        topology=topology,
+        attack_scenarios=attack_scenarios,
+        target_nodes=target_nodes
+    )
+    return result
+
+
+@app.get("/simulate/penetration/scenarios")
+async def get_penetration_scenarios():
+    """
+    取得所有可用的攻擊場景列表
+    """
+    scenarios = penetration_stub.get_available_scenarios()
+    return {"scenarios": scenarios}
 
 
 if __name__ == "__main__":

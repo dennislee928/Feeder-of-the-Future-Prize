@@ -1,6 +1,10 @@
 {
   "app": {
-    "title": "Feeder IDE - Digital Twin & Design Platform"
+    "title": "Feeder IDE - Digital Twin & Design Platform",
+    "mode": {
+      "design": "Design Mode",
+      "security": "Security Test"
+    }
   },
   "palette": {
     "title": "Asset Panel",
@@ -45,6 +49,63 @@
     "status_normal": "Normal",
     "status_warning": "Warning",
     "status_critical": "Critical"
+  },
+  "security": {
+    "no_topology": "No topology available to load",
+    "topology_loaded": "Topology loaded",
+    "load_failed": "Load failed, please check network connection",
+    "add_nodes_first": "Please add nodes to canvas first",
+    "select_scenarios": "Please select at least one attack scenario",
+    "test_failed": "Penetration test failed, please check network connection and service status",
+    "loading": "Loading...",
+    "load_topology": "Load Topology",
+    "running": "Running...",
+    "run_penetration_test": "Run Penetration Test",
+    "run_test": "Run Penetration Test",
+    "total_attacks": "Total Attacks",
+    "successful": "Successful",
+    "critical": "Critical",
+    "layer": {
+      "application": "Application Layer (Layer 7)",
+      "presentation": "Presentation Layer (Layer 6)",
+      "session": "Session Layer (Layer 5)",
+      "transport": "Transport Layer (Layer 4)",
+      "network": "Network Layer (Layer 3)",
+      "datalink": "Data Link Layer (Layer 2)",
+      "physical": "Physical Layer (Layer 1)"
+    },
+    "severity": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "scenarios": {
+      "title": "Attack Scenarios",
+      "loading": "Loading...",
+      "selected": "Selected",
+      "select_all": "Select All",
+      "deselect_all": "Deselect All"
+    },
+    "report": {
+      "title": "Security Report",
+      "empty": "Security test results will appear here after running a penetration test",
+      "summary": "Summary",
+      "total_attacks": "Total Attacks",
+      "successful": "Successful",
+      "failed": "Failed",
+      "critical_vulns": "Critical Vulnerabilities",
+      "affected_nodes": "Affected Nodes",
+      "affected_lines": "Affected Lines",
+      "attacks": "Attack Details",
+      "impact": "Impact",
+      "attack_path": "Attack Path",
+      "affected_assets": "Affected Assets",
+      "nodes": "Nodes",
+      "lines": "Lines",
+      "recommendations": "Recommendations",
+      "blocked": "Blocked"
+    }
   }
 }
 
