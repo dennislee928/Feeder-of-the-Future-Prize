@@ -8,6 +8,7 @@ import './App.css'
 function App() {
   const [selectedNode, setSelectedNode] = useState<string | null>(null)
   const [simulationResult, setSimulationResult] = useState<PowerflowResult | null>(null)
+  const [currentTopologyId, setCurrentTopologyId] = useState<string | null>(null)
 
   return (
     <div className="app-container">
@@ -23,6 +24,8 @@ function App() {
             onNodeSelect={setSelectedNode}
             simulationResult={simulationResult}
             onSimulationComplete={setSimulationResult}
+            currentTopologyId={currentTopologyId}
+            onTopologyIdChange={setCurrentTopologyId}
           />
         </div>
         <div className="app-sidebar-right">

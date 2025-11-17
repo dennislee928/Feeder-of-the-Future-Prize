@@ -55,3 +55,28 @@
   cursor: not-allowed;
 }
 
+.property-divider {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #444;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #63b3ed;
+}
+
+.status-normal {
+  border-color: #10b981 !important;
+  color: #10b981 !important;
+}
+
+.status-warning {
+  border-color: #fbbf24 !important;
+  color: #fbbf24 !important;
+}
+
+.status-critical {
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+

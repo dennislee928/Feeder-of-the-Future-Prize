@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
+import { PowerflowResult } from '../api/simApi'
 import './PropertiesPanel.css'
 
 interface PropertiesPanelProps {
   nodeId: string | null
+  simulationResult: PowerflowResult | null
 }
 
 interface NodeProperties {
@@ -12,8 +14,9 @@ interface NodeProperties {
   [key: string]: any
 }
 
-function PropertiesPanel({ nodeId }: PropertiesPanelProps) {
+function PropertiesPanel({ nodeId, simulationResult }: PropertiesPanelProps) {
   const [properties, setProperties] = useState<NodeProperties | null>(null)
+  const [nodeSimulationData, setNodeSimulationData] = useState<any>(null)
 
   useEffect(() => {
     // TODO: 從 store 或 API 取得節點屬性
@@ -24,10 +27,19 @@ function PropertiesPanel({ nodeId }: PropertiesPanelProps) {
         name: `Node ${nodeId}`,
         type: 'bus',
       })
+
+      // 如果有模擬結果，取得該節點的資料
+      if (simulationResult) {
+        const nodeData = simulationResult.nodes.find((n) => n.node_id === nodeId)
+        setNodeSimulationData(nodeData || null)
+      } else {
+        setNodeSimulationData(null)
+      }
     } else {
       setProperties(null)
+      setNodeSimulationData(null)
     }
-  }, [nodeId])
+  }, [nodeId, simulationResult])
 
   if (!nodeId || !properties) {
     return (
@@ -73,6 +85,66 @@ function PropertiesPanel({ nodeId }: PropertiesPanelProps) {
             readOnly
           />
         </div>
+
+        {nodeSimulationData && (
+          <>
+            <div className="property-divider">模擬結果</div>
+            <div className="property-group">
+              <label className="property-label">電壓 (pu)</label>
+              <input
+                type="text"
+                className="property-input"
+                value={nodeSimulationData.voltage_pu.toFixed(4)}
+                readOnly
+              />
+            </div>
+            <div className="property-group">
+              <label className="property-label">電壓 (kV)</label>
+              <input
+                type="text"
+                className="property-input"
+                value={nodeSimulationData.voltage_kv.toFixed(4)}
+                readOnly
+              />
+            </div>
+            <div className="property-group">
+              <label className="property-label">電壓偏差 (%)</label>
+              <input
+                type="text"
+                className={`property-input ${
+                  nodeSimulationData.status === 'critical'
+                    ? 'status-critical'
+                    : nodeSimulationData.status === 'warning'
+                    ? 'status-warning'
+                    : 'status-normal'
+                }`}
+                value={`${nodeSimulationData.voltage_deviation_percent > 0 ? '+' : ''}${nodeSimulationData.voltage_deviation_percent.toFixed(2)}%`}
+                readOnly
+              />
+            </div>
+            <div className="property-group">
+              <label className="property-label">狀態</label>
+              <input
+                type="text"
+                className={`property-input ${
+                  nodeSimulationData.status === 'critical'
+                    ? 'status-critical'
+                    : nodeSimulationData.status === 'warning'
+                    ? 'status-warning'
+                    : 'status-normal'
+                }`}
+                value={
+                  nodeSimulationData.status === 'critical'
+                    ? '嚴重'
+                    : nodeSimulationData.status === 'warning'
+                    ? '警告'
+                    : '正常'
+                }
+                readOnly
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
