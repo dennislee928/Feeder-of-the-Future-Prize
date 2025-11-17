@@ -97,8 +97,8 @@ docker-compose down --remove-orphans
 
 啟動後，以下服務將可用：
 
-- **IDE Frontend**: http://localhost:3000
-- **Feeder IDE API**: http://localhost:8080
+- **IDE Frontend**: http://localhost:3001 (已改為 3001 避免與本地服務衝突)
+- **Feeder IDE API**: http://localhost:8090 (已改為 8090 避免端口衝突)
 - **Simulation Engine**: http://localhost:8081
 - **Feeder OS Controller**: http://localhost:8082
 - **DER + EV Orchestrator**: http://localhost:8083
@@ -106,6 +106,16 @@ docker-compose down --remove-orphans
 - **Security Gateway**: http://localhost:8443
 - **Telemetry Collector**: http://localhost:8085
 - **MQTT Broker**: localhost:1884 (外部訪問) 或 mqtt:1883 (容器內部)
+
+### 注意：端口衝突
+
+如果遇到端口已被佔用的錯誤，請：
+1. 檢查並停止佔用端口的其他服務
+2. 或修改 `docker-compose.yml` 中的端口映射
+3. 常見衝突端口：
+   - 3000: Grafana 或其他前端服務
+   - 8080: 其他 API 服務
+   - 1883: 本地 MQTT broker
 
 ## Network Notes
 
