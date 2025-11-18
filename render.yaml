@@ -5,6 +5,7 @@
 services:
   - type: web
     name: feeder-ide-frontend
+    runtime: docker
     dockerfilePath: ./frontend/ide-frontend/Dockerfile
     dockerContext: ./frontend/ide-frontend
     envVars:
@@ -17,6 +18,7 @@ services:
 
   - type: web
     name: feeder-ide-api
+    runtime: docker
     dockerfilePath: ./services/feeder-ide-api/Dockerfile
     dockerContext: ./services/feeder-ide-api
     envVars:
@@ -27,6 +29,7 @@ services:
 
   - type: web
     name: feeder-sim-engine
+    runtime: docker
     dockerfilePath: ./services/feeder-sim-engine/Dockerfile
     dockerContext: ./services/feeder-sim-engine
     healthCheckPath: /health
@@ -34,6 +37,7 @@ services:
 
   - type: web
     name: feeder-os-controller
+    runtime: docker
     dockerfilePath: ./services/feeder-os-controller/Dockerfile
     dockerContext: ./services/feeder-os-controller
     envVars:
@@ -50,6 +54,7 @@ services:
 
   - type: web
     name: app-der-ev-orchestrator
+    runtime: docker
     dockerfilePath: ./services/apps/app-der-ev-orchestrator/Dockerfile
     dockerContext: ./services/apps/app-der-ev-orchestrator
     envVars:
@@ -64,6 +69,7 @@ services:
 
   - type: web
     name: app-rural-resilience
+    runtime: docker
     dockerfilePath: ./services/apps/app-rural-resilience/Dockerfile
     dockerContext: ./services/apps/app-rural-resilience
     healthCheckPath: /health
@@ -71,6 +77,7 @@ services:
 
   - type: web
     name: security-gateway
+    runtime: docker
     dockerfilePath: ./services/security-fabric/security-gateway/Dockerfile
     dockerContext: ./services/security-fabric/security-gateway
     envVars:
@@ -81,6 +88,7 @@ services:
 
   - type: web
     name: telemetry-collector
+    runtime: docker
     dockerfilePath: ./services/security-fabric/telemetry-collector/Dockerfile
     dockerContext: ./services/security-fabric/telemetry-collector
     healthCheckPath: /health
