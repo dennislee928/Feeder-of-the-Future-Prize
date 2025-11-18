@@ -58,6 +58,7 @@
     "add_nodes_first": "まずノードをキャンバスに追加してください",
     "select_scenarios": "少なくとも1つの攻撃シナリオを選択してください",
     "test_failed": "ペネトレーションテストが失敗しました。ネットワーク接続とサービス状態を確認してください",
+    "feature_locked": "この機能には登録が必要です。まずログインしてください",
     "loading": "読み込み中...",
     "load_topology": "トポロジーを読み込む",
     "running": "実行中...",
@@ -114,6 +115,7 @@
     "load_failed": "読み込みが失敗しました。ネットワーク接続を確認してください",
     "add_nodes_first": "まずノードをキャンバスに追加してください",
     "calculation_failed": "ESG計算が失敗しました。ネットワーク接続とサービス状態を確認してください",
+    "feature_locked": "この機能には登録が必要です。まずログインしてください",
     "loading": "読み込み中...",
     "load_topology": "トポロジーを読み込む",
     "calculating": "計算中...",
@@ -173,6 +175,77 @@
     },
     "subscription": {
       "expires": "サブスクリプション有効期限"
+    }
+  },
+  "app": {
+    "mode": {
+      "pricing": "料金プラン"
+    }
+  },
+  "payment": {
+    "plans": {
+      "title": "プランを選択",
+      "description": "あなたのニーズに最適なプランを選択してください",
+      "popular": "おすすめ",
+      "current_plan": "現在のプラン",
+      "pay_with_stripe": "Stripeで支払う",
+      "pay_with_paypal": "PayPalで支払う",
+      "free": {
+        "name": "無料メンバー",
+        "price": "無料",
+        "features": {
+          "unlimited_topologies": "無制限トポロジー",
+          "all_simulations": "すべてのシミュレーション機能",
+          "basic_3d": "基本3Dレンダリング",
+          "basic_ai": "基本AI予測",
+          "advanced_security": "高度なセキュリティシミュレーション"
+        }
+      },
+      "premium": {
+        "name": "プレミアムメンバー",
+        "price": "$29/月",
+        "features": {
+          "all_free": "すべての無料メンバー機能",
+          "api_access": "APIアクセス",
+          "priority_support": "優先サポート",
+          "advanced_3d": "高度な3Dレンダリング",
+          "advanced_ai": "高度なAI予測",
+          "bulk_export": "一括エクスポート/インポート",
+          "collaboration": "コラボレーション機能"
+        }
+      }
+    },
+    "checkout": {
+      "title": "支払い確認",
+      "plan": "プラン",
+      "provider": "支払い方法",
+      "cancel": "キャンセル",
+      "confirm": "支払い確認",
+      "processing": "処理中...",
+      "failed": "支払いに失敗しました。もう一度お試しください",
+      "paypal_redirect": "PayPalにリダイレクト中..."
+    },
+    "history": {
+      "title": "支払い履歴",
+      "loading": "読み込み中...",
+      "load_failed": "読み込みに失敗しました",
+      "empty": "支払い履歴がありません",
+      "date": "日付",
+      "amount": "金額",
+      "provider": "支払い方法",
+      "status": "ステータス"
+    },
+    "status": {
+      "pending": "処理中",
+      "completed": "完了",
+      "failed": "失敗",
+      "refunded": "返金済み"
+    }
+  },
+  "demo": {
+    "banner": {
+      "text": "デモモードを使用中です（最大3つのトポロジー、基本機能）。ログインして全機能にアクセス！",
+      "login": "今すぐログイン"
     }
   }
 }

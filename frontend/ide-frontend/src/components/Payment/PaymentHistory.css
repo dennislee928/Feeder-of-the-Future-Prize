@@ -1,0 +1,62 @@
+.payment-history {
+  padding: 20px;
+}
+
+.payment-history-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.payment-history-loading,
+.payment-history-error,
+.payment-history-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.payment-history-error {
+  color: #ea4335;
+}
+
+.payment-history-table {
+  overflow-x: auto;
+}
+
+.payment-history-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-history-table thead {
+  background: #f5f5f5;
+}
+
+.payment-history-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.payment-history-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+}
+
+.payment-history-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.payment-status {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+

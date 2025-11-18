@@ -33,6 +33,8 @@
     "no_topology": "沒有可載入的拓樸",
     "load_failed": "載入失敗，請檢查網路連線",
     "save_failed": "儲存失敗，請檢查網路連線",
+    "quota_exceeded": "拓樸配額已達上限（已使用 {{used}} / 最多 {{max}}），請升級會員或刪除舊拓樸",
+    "simulation_quota_exceeded": "今日模擬次數已達上限，請升級會員或明天再試",
     "average_voltage": "平均電壓",
     "max_line_loading": "最大載流率"
   },
@@ -58,6 +60,7 @@
     "add_nodes_first": "請先添加節點到畫布上",
     "select_scenarios": "請選擇至少一個攻擊場景",
     "test_failed": "滲透測試失敗，請檢查網路連線與服務狀態",
+    "feature_locked": "此功能需要註冊會員，請先登入",
     "loading": "載入中...",
     "load_topology": "載入拓樸",
     "running": "執行中...",
@@ -114,6 +117,7 @@
     "load_failed": "載入失敗，請檢查網路連線",
     "add_nodes_first": "請先添加節點到畫布上",
     "calculation_failed": "ESG 計算失敗，請檢查網路連線與服務狀態",
+    "feature_locked": "此功能需要註冊會員，請先登入",
     "loading": "載入中...",
     "load_topology": "載入拓樸",
     "calculating": "計算中...",
@@ -173,6 +177,77 @@
     },
     "subscription": {
       "expires": "訂閱到期日"
+    }
+  },
+  "app": {
+    "mode": {
+      "pricing": "付費方案"
+    }
+  },
+  "payment": {
+    "plans": {
+      "title": "選擇您的方案",
+      "description": "選擇最適合您需求的方案",
+      "popular": "推薦",
+      "current_plan": "當前方案",
+      "pay_with_stripe": "使用 Stripe 付費",
+      "pay_with_paypal": "使用 PayPal 付費",
+      "free": {
+        "name": "註冊會員",
+        "price": "免費",
+        "features": {
+          "unlimited_topologies": "無限拓樸",
+          "all_simulations": "所有模擬功能",
+          "basic_3d": "基礎 3D 渲染",
+          "basic_ai": "基礎 AI 預測",
+          "advanced_security": "進階資安模擬"
+        }
+      },
+      "premium": {
+        "name": "付費會員",
+        "price": "$29/月",
+        "features": {
+          "all_free": "包含所有註冊會員功能",
+          "api_access": "API 存取",
+          "priority_support": "優先技術支援",
+          "advanced_3d": "進階 3D 渲染",
+          "advanced_ai": "進階 AI 預測",
+          "bulk_export": "批量匯出/匯入",
+          "collaboration": "協作功能"
+        }
+      }
+    },
+    "checkout": {
+      "title": "確認付費",
+      "plan": "方案",
+      "provider": "付費方式",
+      "cancel": "取消",
+      "confirm": "確認付費",
+      "processing": "處理中...",
+      "failed": "付費失敗，請重試",
+      "paypal_redirect": "正在跳轉到 PayPal..."
+    },
+    "history": {
+      "title": "付費歷史",
+      "loading": "載入中...",
+      "load_failed": "載入失敗",
+      "empty": "尚無付費記錄",
+      "date": "日期",
+      "amount": "金額",
+      "provider": "付費方式",
+      "status": "狀態"
+    },
+    "status": {
+      "pending": "處理中",
+      "completed": "已完成",
+      "failed": "失敗",
+      "refunded": "已退款"
+    }
+  },
+  "demo": {
+    "banner": {
+      "text": "您正在使用 Demo 模式（最多 3 個拓樸，基礎功能）。登入以使用完整功能！",
+      "login": "立即登入"
     }
   }
 }

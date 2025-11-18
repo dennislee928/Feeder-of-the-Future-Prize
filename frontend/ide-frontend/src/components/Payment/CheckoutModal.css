@@ -1,0 +1,130 @@
+.checkout-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.checkout-modal {
+  background: white;
+  border-radius: 8px;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.checkout-modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.checkout-modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkout-modal-close:hover {
+  color: #000;
+}
+
+.checkout-modal-body {
+  padding: 20px;
+}
+
+.checkout-summary {
+  margin-bottom: 20px;
+}
+
+.checkout-summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.checkout-summary-item:last-child {
+  border-bottom: none;
+}
+
+.checkout-summary-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.checkout-summary-value {
+  color: #333;
+  font-weight: 600;
+}
+
+.checkout-error {
+  background: #fee;
+  color: #c33;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.checkout-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.checkout-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.checkout-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.checkout-button-cancel {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.checkout-button-cancel:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.checkout-button-confirm {
+  background: #4285f4;
+  color: white;
+}
+
+.checkout-button-confirm:hover:not(:disabled) {
+  background: #357ae8;
+}
+

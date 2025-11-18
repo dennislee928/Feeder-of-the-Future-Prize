@@ -7,6 +7,7 @@ import (
 	"github.com/feeder-platform/feeder-ide-api/api"
 	"github.com/feeder-platform/feeder-ide-api/internal/auth"
 	"github.com/feeder-platform/feeder-ide-api/internal/database"
+	"github.com/feeder-platform/feeder-ide-api/internal/middleware"
 	"github.com/feeder-platform/feeder-ide-api/internal/payment"
 	"github.com/feeder-platform/feeder-ide-api/internal/topology"
 	"github.com/feeder-platform/feeder-ide-api/internal/profiles"
@@ -74,7 +75,12 @@ func main() {
 	}
 
 	// 初始化 handlers
-	topologyHandler := api.NewTopologyHandler(topologyRepo)
+	var topologyHandler *api.TopologyHandler
+	if userService != nil {
+		topologyHandler = api.NewTopologyHandler(topologyRepo, userService)
+	} else {
+		topologyHandler = api.NewTopologyHandler(topologyRepo, nil)
+	}
 	profileHandler := api.NewProfileHandler(profileRepo)
 
 	// 設定 Gin router
@@ -109,11 +115,14 @@ func main() {
 			}
 		}
 
-		// Topology endpoints (使用可選認證中間件)
-		if authHandler != nil {
+		// Topology endpoints (使用可選認證中間件和配額檢查)
+		if authHandler != nil && userService != nil {
 			v1.Use(auth.OptionalAuthMiddleware())
+			// 為創建拓樸添加配額檢查
+			v1.POST("/topologies", middleware.QuotaMiddleware("topology", userService), topologyHandler.CreateTopology)
+		} else {
+			v1.POST("/topologies", topologyHandler.CreateTopology)
 		}
-		v1.POST("/topologies", topologyHandler.CreateTopology)
 		v1.GET("/topologies/:id", topologyHandler.GetTopology)
 		v1.PUT("/topologies/:id", topologyHandler.UpdateTopology)
 		v1.DELETE("/topologies/:id", topologyHandler.DeleteTopology)

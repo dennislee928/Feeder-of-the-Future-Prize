@@ -14,6 +14,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css'
 import { simApi, PowerflowResult } from '../api/simApi'
 import { ideApi } from '../api/ideApi'
+import { useFeaturePermission } from '../hooks/useFeaturePermission'
 import CustomNode from './CustomNode'
 import './TopologyCanvas.css'
 
@@ -37,6 +38,7 @@ function TopologyCanvas({
   onTopologyIdChange
 }: TopologyCanvasProps) {
   const { t } = useTranslation()
+  const { canCreateTopology, canRunSimulation } = useFeaturePermission()
   const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
   const [isRunningSimulation, setIsRunningSimulation] = useState(false)
@@ -147,6 +149,20 @@ function TopologyCanvas({
       return
     }
 
+    // 檢查配額（僅在創建新拓樸時）
+    if (!currentTopologyId) {
+      const quotaCheck = canCreateTopology()
+      if (!quotaCheck.canCreate) {
+        alert(
+          t('topology.quota_exceeded', {
+            used: quotaCheck.used,
+            max: quotaCheck.max === Infinity ? '∞' : quotaCheck.max,
+          })
+        )
+        return
+      }
+    }
+
     setIsSaving(true)
     try {
       const topologyData = {
@@ -243,6 +259,12 @@ function TopologyCanvas({
   const handleRunSimulation = useCallback(async () => {
     if (nodes.length === 0) {
       alert(t('topology.add_nodes_first'))
+      return
+    }
+
+    // 檢查模擬配額
+    if (!canRunSimulation()) {
+      alert(t('topology.simulation_quota_exceeded'))
       return
     }
 
