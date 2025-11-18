@@ -5,6 +5,7 @@ import "time"
 // Topology 代表一個配電 feeder 拓樸
 type Topology struct {
 	ID          string    `json:"id"`
+	UserID      *string   `json:"user_id,omitempty"` // 可選，無註冊用戶為 nil
 	Name        string    `json:"name"`
 	Description string    `json:"description,omitempty"`
 	ProfileType string    `json:"profile_type"` // rural, suburban, urban

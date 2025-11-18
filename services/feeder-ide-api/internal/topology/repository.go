@@ -10,9 +10,12 @@ import (
 type Repository interface {
 	Create(topology *Topology) error
 	GetByID(id string) (*Topology, error)
+	GetByIDAndUserID(id string, userID *string) (*Topology, error) // 添加用戶ID檢查
 	Update(id string, topology *Topology) error
 	Delete(id string) error
 	List() ([]*Topology, error)
+	ListByUserID(userID *string) ([]*Topology, error) // 根據用戶ID列出拓樸
+	CountByUserID(userID *string) (int, error)        // 統計用戶拓樸數量
 }
 
 // InMemoryRepository 記憶體實作（開發用）
