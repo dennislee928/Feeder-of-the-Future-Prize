@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.powerflow_stub import PowerflowStub
 from src.reliability_stub import ReliabilityStub
 from src.penetration_stub import PenetrationStub
+from src.esg_stub import ESGStub
 
 app = FastAPI(
     title="Feeder Simulation Engine",
@@ -27,6 +28,7 @@ app.add_middleware(
 powerflow_stub = PowerflowStub()
 reliability_stub = ReliabilityStub()
 penetration_stub = PenetrationStub()
+esg_stub = ESGStub()
 
 
 @app.get("/health")
@@ -90,6 +92,20 @@ async def get_penetration_scenarios():
     """
     scenarios = penetration_stub.get_available_scenarios()
     return {"scenarios": scenarios}
+
+
+@app.post("/simulate/esg")
+async def simulate_esg(request: dict):
+    """
+    執行 ESG/碳權計算（stub 版本）
+    
+    接收拓樸 JSON + 計算參數，回傳碳排放、碳權、ESG 分數
+    """
+    topology = request.get("topology", {})
+    parameters = request.get("parameters", {})
+    
+    result = esg_stub.calculate_emissions(topology, parameters)
+    return result
 
 
 if __name__ == "__main__":

@@ -1,0 +1,197 @@
+.esg-report-panel {
+  padding: 16px;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.empty-message {
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+  padding: 32px;
+}
+
+.esg-summary-section,
+.esg-node-emissions-section,
+.esg-recommendations-section {
+  margin-bottom: 24px;
+}
+
+.esg-summary-section h3,
+.esg-node-emissions-section h3,
+.esg-recommendations-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+}
+
+.summary-item .label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.summary-item .value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.summary-item .value.negative {
+  color: #ef4444;
+}
+
+.summary-item .value.positive {
+  color: #10b981;
+}
+
+.summary-item .value.score-0,
+.summary-item .value.score-1 {
+  color: #ef4444;
+}
+
+.summary-item .value.score-2 {
+  color: #f59e0b;
+}
+
+.summary-item .value.score-3 {
+  color: #3b82f6;
+}
+
+.summary-item .value.score-4,
+.summary-item .value.score-5 {
+  color: #10b981;
+}
+
+.node-emissions-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.node-emission-item {
+  background: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.node-emission-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.node-id {
+  font-weight: 600;
+  color: #fff;
+  font-size: 14px;
+}
+
+.node-type {
+  color: #aaa;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.node-emission-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #ccc;
+}
+
+.node-emission-details .negative {
+  color: #ef4444;
+}
+
+.node-emission-details .positive {
+  color: #10b981;
+}
+
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recommendation-item {
+  background: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.recommendation-item.priority-high {
+  border-left: 4px solid #ef4444;
+}
+
+.recommendation-item.priority-medium {
+  border-left: 4px solid #f59e0b;
+}
+
+.recommendation-item.priority-low {
+  border-left: 4px solid #3b82f6;
+}
+
+.recommendation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.recommendation-title {
+  font-weight: 600;
+  color: #fff;
+  font-size: 14px;
+}
+
+.priority-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.priority-badge.priority-high {
+  background: #ef4444;
+  color: #fff;
+}
+
+.priority-badge.priority-medium {
+  background: #f59e0b;
+  color: #fff;
+}
+
+.priority-badge.priority-low {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.recommendation-description {
+  color: #ccc;
+  font-size: 13px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.recommendation-impact {
+  color: #10b981;
+  font-size: 12px;
+  font-weight: 600;
+}
+

@@ -2,13 +2,14 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import TopologyCanvas from './components/TopologyCanvas'
 import SecurityTestCanvas from './components/SecurityTestCanvas'
+import ESGSimulationCanvas from './components/ESGSimulationCanvas'
 import Palette from './components/Palette'
 import PropertiesPanel from './components/PropertiesPanel'
 import LanguageSwitcher from './components/LanguageSwitcher'
 import { PowerflowResult } from './api/simApi'
 import './App.css'
 
-type AppMode = 'design' | 'security'
+type AppMode = 'design' | 'security' | 'esg'
 
 function App() {
   const { t } = useTranslation()
@@ -35,6 +36,12 @@ function App() {
             >
               {t('app.mode.security')}
             </button>
+            <button
+              className={`mode-tab ${mode === 'esg' ? 'active' : ''}`}
+              onClick={() => setMode('esg')}
+            >
+              {t('app.mode.esg')}
+            </button>
           </div>
           <LanguageSwitcher />
         </div>
@@ -58,8 +65,14 @@ function App() {
               <PropertiesPanel nodeId={selectedNode} simulationResult={simulationResult} />
             </div>
           </>
-        ) : (
+        ) : mode === 'security' ? (
           <SecurityTestCanvas
+            onNodeSelect={setSelectedNode}
+            currentTopologyId={currentTopologyId}
+            onTopologyIdChange={setCurrentTopologyId}
+          />
+        ) : (
+          <ESGSimulationCanvas
             onNodeSelect={setSelectedNode}
             currentTopologyId={currentTopologyId}
             onTopologyIdChange={setCurrentTopologyId}

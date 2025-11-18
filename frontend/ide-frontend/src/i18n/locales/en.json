@@ -3,7 +3,8 @@
     "title": "Feeder IDE - Digital Twin & Design Platform",
     "mode": {
       "design": "Design Mode",
-      "security": "Security Test"
+      "security": "Security Test",
+      "esg": "ESG/Carbon Credit"
     }
   },
   "palette": {
@@ -105,6 +106,48 @@
       "lines": "Lines",
       "recommendations": "Recommendations",
       "blocked": "Blocked"
+    }
+  },
+  "esg": {
+    "no_topology": "No topology available to load",
+    "topology_loaded": "Topology loaded",
+    "load_failed": "Load failed, please check network connection",
+    "add_nodes_first": "Please add nodes to canvas first",
+    "calculation_failed": "ESG calculation failed, please check network connection and service status",
+    "loading": "Loading...",
+    "load_topology": "Load Topology",
+    "calculating": "Calculating...",
+    "calculate_esg": "Calculate ESG/Carbon Credit",
+    "calculate": "Calculate ESG/Carbon Credit",
+    "total_emissions": "Total Emissions",
+    "carbon_credits": "Carbon Credits",
+    "esg_score": "ESG Score",
+    "calculation": {
+      "title": "Calculation Parameters",
+      "time_hours": "Time Range (hours)",
+      "ev_charging_hours": "EV Charging Hours",
+      "solar_generation_hours": "Solar Generation Hours",
+      "battery_cycles": "Battery Cycles"
+    },
+    "report": {
+      "title": "ESG Report",
+      "empty": "ESG calculation results will appear here after running a calculation",
+      "summary": "Summary",
+      "total_emissions": "Total Emissions",
+      "carbon_credits": "Carbon Credits",
+      "carbon_value": "Carbon Credit Value",
+      "esg_score": "ESG Score",
+      "node_emissions": "Node Emissions",
+      "power": "Power",
+      "energy": "Energy",
+      "emission": "Emission",
+      "recommendations": "Reduction Recommendations",
+      "estimated_reduction": "Estimated Reduction",
+      "priority": {
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      }
     }
   }
 }

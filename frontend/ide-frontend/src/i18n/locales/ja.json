@@ -3,7 +3,8 @@
     "title": "Feeder IDE - デジタルツイン & 設計プラットフォーム",
     "mode": {
       "design": "設計モード",
-      "security": "セキュリティテスト"
+      "security": "セキュリティテスト",
+      "esg": "ESG/カーボンクレジット"
     }
   },
   "palette": {
@@ -105,6 +106,48 @@
       "lines": "線路",
       "recommendations": "推奨事項",
       "blocked": "ブロック済み"
+    }
+  },
+  "esg": {
+    "no_topology": "読み込むトポロジーがありません",
+    "topology_loaded": "トポロジーが読み込まれました",
+    "load_failed": "読み込みが失敗しました。ネットワーク接続を確認してください",
+    "add_nodes_first": "まずノードをキャンバスに追加してください",
+    "calculation_failed": "ESG計算が失敗しました。ネットワーク接続とサービス状態を確認してください",
+    "loading": "読み込み中...",
+    "load_topology": "トポロジーを読み込む",
+    "calculating": "計算中...",
+    "calculate_esg": "ESG/カーボンクレジットを計算",
+    "calculate": "ESG/カーボンクレジットを計算",
+    "total_emissions": "総排出量",
+    "carbon_credits": "カーボンクレジット",
+    "esg_score": "ESGスコア",
+    "calculation": {
+      "title": "計算パラメータ",
+      "time_hours": "時間範囲（時間）",
+      "ev_charging_hours": "EV充電時間",
+      "solar_generation_hours": "太陽光発電時間",
+      "battery_cycles": "バッテリーサイクル数"
+    },
+    "report": {
+      "title": "ESGレポート",
+      "empty": "ESG計算を実行すると、結果がここに表示されます",
+      "summary": "概要",
+      "total_emissions": "総排出量",
+      "carbon_credits": "カーボンクレジット",
+      "carbon_value": "カーボンクレジット価値",
+      "esg_score": "ESGスコア",
+      "node_emissions": "ノード排出量",
+      "power": "電力",
+      "energy": "エネルギー",
+      "emission": "排出量",
+      "recommendations": "削減推奨事項",
+      "estimated_reduction": "推定削減量",
+      "priority": {
+        "high": "高",
+        "medium": "中",
+        "low": "低"
+      }
     }
   }
 }

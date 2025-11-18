@@ -1,0 +1,37 @@
+.esg-calculation-panel {
+  padding: 16px;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.parameter-group {
+  margin-bottom: 16px;
+}
+
+.parameter-group label {
+  display: block;
+  color: #ccc;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.parameter-group input {
+  width: 100%;
+  padding: 8px;
+  background: #2a2a2a;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.parameter-group input:focus {
+  outline: none;
+  border-color: #10b981;
+}
+

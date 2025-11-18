@@ -3,7 +3,8 @@
     "title": "Feeder IDE - 數位孿生與設計平台",
     "mode": {
       "design": "設計模式",
-      "security": "安全測試"
+      "security": "安全測試",
+      "esg": "ESG/碳權模擬"
     }
   },
   "palette": {
@@ -105,6 +106,48 @@
       "lines": "線路",
       "recommendations": "修復建議",
       "blocked": "已阻擋"
+    }
+  },
+  "esg": {
+    "no_topology": "沒有可載入的拓樸",
+    "topology_loaded": "拓樸已載入",
+    "load_failed": "載入失敗，請檢查網路連線",
+    "add_nodes_first": "請先添加節點到畫布上",
+    "calculation_failed": "ESG 計算失敗，請檢查網路連線與服務狀態",
+    "loading": "載入中...",
+    "load_topology": "載入拓樸",
+    "calculating": "計算中...",
+    "calculate_esg": "計算 ESG/碳權",
+    "calculate": "計算 ESG/碳權",
+    "total_emissions": "總碳排放",
+    "carbon_credits": "碳權",
+    "esg_score": "ESG 分數",
+    "calculation": {
+      "title": "計算參數",
+      "time_hours": "時間範圍（小時）",
+      "ev_charging_hours": "EV 充電時數",
+      "solar_generation_hours": "太陽能發電時數",
+      "battery_cycles": "電池循環次數"
+    },
+    "report": {
+      "title": "ESG 報告",
+      "empty": "執行 ESG 計算後，結果將顯示在這裡",
+      "summary": "摘要",
+      "total_emissions": "總碳排放",
+      "carbon_credits": "碳權",
+      "carbon_value": "碳權價值",
+      "esg_score": "ESG 分數",
+      "node_emissions": "節點排放",
+      "power": "功率",
+      "energy": "能量",
+      "emission": "排放",
+      "recommendations": "減排建議",
+      "estimated_reduction": "預估減排量",
+      "priority": {
+        "high": "高",
+        "medium": "中",
+        "low": "低"
+      }
     }
   }
 }
