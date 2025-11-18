@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/feeder-platform/feeder-ide-api/internal/auth"
-	"github.com/feeder-platform/feeder-ide-api/internal/middleware"
 	"github.com/feeder-platform/feeder-ide-api/internal/topology"
 	"github.com/feeder-platform/feeder-ide-api/internal/user"
 	"github.com/gin-gonic/gin"

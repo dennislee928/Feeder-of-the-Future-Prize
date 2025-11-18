@@ -106,12 +106,12 @@ func main() {
 	{
 		// Auth endpoints (僅在資料庫模式下可用)
 		if authHandler != nil {
-			auth := v1.Group("/auth")
+			authGroup := v1.Group("/auth")
 			{
-				auth.POST("/oauth/callback", authHandler.OAuthCallback)
-				auth.POST("/oauth/url", authHandler.GetAuthURL)
-				auth.POST("/refresh", authHandler.RefreshToken)
-				auth.GET("/me", auth.AuthMiddleware(), authHandler.GetMe)
+				authGroup.POST("/oauth/callback", authHandler.OAuthCallback)
+				authGroup.POST("/oauth/url", authHandler.GetAuthURL)
+				authGroup.POST("/refresh", authHandler.RefreshToken)
+				authGroup.GET("/me", auth.AuthMiddleware(), authHandler.GetMe)
 			}
 		}
 
