@@ -149,6 +149,31 @@
         "low": "Low"
       }
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "description": "Sign in with Google or GitHub to access advanced features",
+      "button": "Login",
+      "google": "Sign in with Google",
+      "github": "Sign in with GitHub",
+      "loading": "Redirecting to login page...",
+      "failed": "Login failed, please try again"
+    },
+    "logout": "Logout",
+    "tier": {
+      "label": "Membership Tier",
+      "demo": "Demo User",
+      "free": "Free Member",
+      "premium": "Premium Member"
+    },
+    "quota": {
+      "topologies": "Topologies",
+      "simulations": "Daily Simulations"
+    },
+    "subscription": {
+      "expires": "Subscription Expires"
+    }
   }
 }
 

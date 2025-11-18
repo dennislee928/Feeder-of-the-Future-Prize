@@ -5,9 +5,12 @@ import (
 	"os"
 
 	"github.com/feeder-platform/feeder-ide-api/api"
+	"github.com/feeder-platform/feeder-ide-api/internal/auth"
 	"github.com/feeder-platform/feeder-ide-api/internal/database"
+	"github.com/feeder-platform/feeder-ide-api/internal/payment"
 	"github.com/feeder-platform/feeder-ide-api/internal/topology"
 	"github.com/feeder-platform/feeder-ide-api/internal/profiles"
+	"github.com/feeder-platform/feeder-ide-api/internal/user"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,6 +41,38 @@ func main() {
 
 	profileRepo := profiles.NewInMemoryRepository()
 
+	// 初始化用戶相關服務（僅在 PostgreSQL 模式下）
+	var userRepo user.Repository
+	var userService *user.Service
+	var authHandler *api.AuthHandler
+	var paymentHandler *api.PaymentHandler
+	var oauthConfig *auth.OAuthConfig
+
+	if databaseURL != "" {
+		// 初始化用戶 repository
+		userRepo, err = user.NewPostgresUserRepository()
+		if err != nil {
+			log.Fatalf("Failed to create user repository: %v", err)
+		}
+
+		// 初始化用戶服務
+		userService = user.NewService(userRepo)
+		// 設置拓樸計數器（用於檢查配額）
+		userService.SetTopologyCounter(topologyRepo)
+
+		// 初始化 OAuth 配置
+		oauthConfig = auth.NewOAuthConfig()
+
+		// 初始化認證處理器
+		authHandler = api.NewAuthHandler(oauthConfig, userRepo, userService)
+
+		// 初始化付費服務
+		stripeService := payment.NewStripeService()
+		paypalService := payment.NewPayPalService()
+		webhookHandler := payment.NewWebhookHandler(stripeService, paypalService, userRepo, userService)
+		paymentHandler = api.NewPaymentHandler(stripeService, paypalService, webhookHandler, userRepo, userService)
+	}
+
 	// 初始化 handlers
 	topologyHandler := api.NewTopologyHandler(topologyRepo)
 	profileHandler := api.NewProfileHandler(profileRepo)
@@ -63,7 +98,21 @@ func main() {
 	// API routes
 	v1 := router.Group("/api/v1")
 	{
-		// Topology endpoints
+		// Auth endpoints (僅在資料庫模式下可用)
+		if authHandler != nil {
+			auth := v1.Group("/auth")
+			{
+				auth.POST("/oauth/callback", authHandler.OAuthCallback)
+				auth.POST("/oauth/url", authHandler.GetAuthURL)
+				auth.POST("/refresh", authHandler.RefreshToken)
+				auth.GET("/me", auth.AuthMiddleware(), authHandler.GetMe)
+			}
+		}
+
+		// Topology endpoints (使用可選認證中間件)
+		if authHandler != nil {
+			v1.Use(auth.OptionalAuthMiddleware())
+		}
 		v1.POST("/topologies", topologyHandler.CreateTopology)
 		v1.GET("/topologies/:id", topologyHandler.GetTopology)
 		v1.PUT("/topologies/:id", topologyHandler.UpdateTopology)
@@ -73,6 +122,20 @@ func main() {
 		// Profile endpoints
 		v1.GET("/profiles", profileHandler.ListProfiles)
 		v1.GET("/profiles/:type", profileHandler.GetProfile)
+
+		// Payment endpoints (僅在資料庫模式下可用)
+		if paymentHandler != nil {
+			payments := v1.Group("/payments")
+			payments.Use(auth.AuthMiddleware())
+			{
+				payments.POST("/create-checkout", paymentHandler.CreateCheckout)
+				payments.GET("/history", paymentHandler.GetPaymentHistory)
+			}
+
+			// Webhook 端點（不需要認證）
+			v1.POST("/payments/webhook/stripe", paymentHandler.HandleStripeWebhook)
+			v1.POST("/payments/webhook/paypal", paymentHandler.HandlePayPalWebhook)
+		}
 	}
 
 	// Health check

@@ -149,6 +149,31 @@
         "low": "低"
       }
     }
+  },
+  "auth": {
+    "login": {
+      "title": "登入",
+      "description": "使用 Google 或 GitHub 帳號登入以使用進階功能",
+      "button": "登入",
+      "google": "使用 Google 登入",
+      "github": "使用 GitHub 登入",
+      "loading": "正在跳轉到登入頁面...",
+      "failed": "登入失敗，請重試"
+    },
+    "logout": "登出",
+    "tier": {
+      "label": "會員等級",
+      "demo": "無註冊會員",
+      "free": "註冊會員",
+      "premium": "付費會員"
+    },
+    "quota": {
+      "topologies": "拓樸數量",
+      "simulations": "每日模擬次數"
+    },
+    "subscription": {
+      "expires": "訂閱到期日"
+    }
   }
 }
 

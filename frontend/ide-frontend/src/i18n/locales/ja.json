@@ -149,6 +149,31 @@
         "low": "低"
       }
     }
+  },
+  "auth": {
+    "login": {
+      "title": "ログイン",
+      "description": "GoogleまたはGitHubアカウントでログインして高度な機能にアクセス",
+      "button": "ログイン",
+      "google": "Googleでログイン",
+      "github": "GitHubでログイン",
+      "loading": "ログインページにリダイレクト中...",
+      "failed": "ログインに失敗しました。もう一度お試しください"
+    },
+    "logout": "ログアウト",
+    "tier": {
+      "label": "メンバーシップ階層",
+      "demo": "デモユーザー",
+      "free": "無料メンバー",
+      "premium": "プレミアムメンバー"
+    },
+    "quota": {
+      "topologies": "トポロジー",
+      "simulations": "1日のシミュレーション"
+    },
+    "subscription": {
+      "expires": "サブスクリプション有効期限"
+    }
   }
 }
 
