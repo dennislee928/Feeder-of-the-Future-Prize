@@ -209,7 +209,7 @@ function ESGSimulationCanvas({
     } finally {
       setIsCalculating(false)
     }
-  }, [nodes, edges, parameters, t])
+  }, [nodes, edges, parameters, canUseESG, t])
 
   // 根據 ESG 結果更新節點視覺化
   useEffect(() => {

@@ -202,7 +202,7 @@ function SecurityTestCanvas({
     } finally {
       setIsRunningTest(false)
     }
-  }, [nodes, edges, selectedScenarios, t])
+  }, [nodes, edges, selectedScenarios, canUseAdvancedSecurity, t])
 
   // 根據測試結果更新節點和線路視覺化
   useEffect(() => {
