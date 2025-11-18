@@ -5,14 +5,37 @@ import (
 	"os"
 
 	"github.com/feeder-platform/feeder-ide-api/api"
+	"github.com/feeder-platform/feeder-ide-api/internal/database"
 	"github.com/feeder-platform/feeder-ide-api/internal/topology"
 	"github.com/feeder-platform/feeder-ide-api/internal/profiles"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	// 初始化資料庫連接（暫時使用記憶體模式）
-	topologyRepo := topology.NewInMemoryRepository()
+	// 初始化資料庫連接
+	var topologyRepo topology.Repository
+	var err error
+
+	// 檢查是否有 DATABASE_URL，如果有則使用 PostgreSQL，否則使用記憶體模式
+	databaseURL := os.Getenv("DATABASE_URL")
+	if databaseURL != "" {
+		// 初始化 PostgreSQL
+		if err := database.Init(); err != nil {
+			log.Fatalf("Failed to initialize database: %v", err)
+		}
+		defer database.Close()
+
+		topologyRepo, err = topology.NewPostgresRepository()
+		if err != nil {
+			log.Fatalf("Failed to create postgres repository: %v", err)
+		}
+		log.Println("Using PostgreSQL database")
+	} else {
+		// 使用記憶體模式（開發/測試用）
+		topologyRepo = topology.NewInMemoryRepository()
+		log.Println("Using in-memory database (development mode)")
+	}
+
 	profileRepo := profiles.NewInMemoryRepository()
 
 	// 初始化 handlers
