@@ -10,6 +10,11 @@ interface CustomNodeData {
   voltageDeviation?: number
   isAffected?: boolean
   severity?: 'low' | 'medium' | 'high' | 'critical'
+  style?: {
+    background?: string
+    border?: string
+    color?: string
+  }
 }
 
 function CustomNode({ data }: NodeProps<CustomNodeData>) {
