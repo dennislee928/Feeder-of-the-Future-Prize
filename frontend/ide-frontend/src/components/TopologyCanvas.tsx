@@ -77,7 +77,7 @@ function TopologyCanvas({
         type: 'default',
         position,
         data: {
-          label: item.name,
+          label: item.nameKey ? t(`palette.${item.nameKey}`) : item.type,
           type: item.type,
         },
         style: {
