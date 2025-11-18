@@ -1,6 +1,6 @@
 # Render Blueprint Configuration
-# 注意：如果此 Blueprint 無法直接使用，請參考 deploy/RENDER_DEPLOYMENT.md 進行手動部署
-# Render Blueprint 格式可能因版本而異，建議使用 Render Dashboard 手動創建服務
+# 注意：如果此 Blueprint 無法直接使用，請參考 deploy/RENDER_MANUAL_SETUP.md 進行手動部署
+# Render 會自動設置 PORT 環境變數，所有服務已配置為使用 PORT
 
 services:
   - type: web

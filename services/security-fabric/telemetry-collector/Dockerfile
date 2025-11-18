@@ -8,10 +8,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy source code
 COPY src/ ./src/
+COPY start.sh ./
 
-# Expose port
+# Make start script executable
+RUN chmod +x start.sh
+
+# Expose port (Render will set PORT env var)
 EXPOSE 8085
 
-# Run the application
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8085"]
+# Run the application (use PORT env var for Render compatibility)
+CMD ["./start.sh"]
 
