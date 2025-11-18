@@ -17,7 +17,13 @@ import { ideApi } from '../api/ideApi'
 import { penetrationApi, PenetrationTestResult } from '../api/penetrationApi'
 import AttackScenarioPanel from './AttackScenarioPanel'
 import SecurityReportPanel from './SecurityReportPanel'
+import Palette from './Palette'
+import CustomNode from './CustomNode'
 import './SecurityTestCanvas.css'
+
+const nodeTypes = {
+  default: CustomNode,
+}
 
 interface SecurityTestCanvasProps {
   onNodeSelect: (nodeId: string | null) => void
@@ -53,6 +59,46 @@ function SecurityTestCanvas({
   const onPaneClick = useCallback(() => {
     onNodeSelect(null)
   }, [onNodeSelect])
+
+  const onDrop = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault()
+
+      const data = event.dataTransfer.getData('application/json')
+      if (!data) return
+
+      const item = JSON.parse(data)
+      const position = {
+        x: event.clientX - 300, // 調整左側欄位寬度
+        y: event.clientY - 100, // 調整 header 高度
+      }
+
+      const newNode: Node = {
+        id: `${item.type}-${Date.now()}`,
+        type: 'default',
+        position,
+        data: {
+          label: item.nameKey ? t(`palette.${item.nameKey}`) : item.type,
+          type: item.type,
+        },
+        style: {
+          background: '#2a2a2a',
+          color: '#fff',
+          border: '1px solid #444',
+          borderRadius: '4px',
+          padding: '10px',
+        },
+      }
+
+      setNodes((nds) => nds.concat(newNode))
+    },
+    [setNodes]
+  )
+
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault()
+    event.dataTransfer.dropEffect = 'move'
+  }, [])
 
   // 載入拓樸
   const handleLoadTopology = useCallback(async () => {
@@ -251,12 +297,17 @@ function SecurityTestCanvas({
   return (
     <div className="security-test-container">
       <div className="security-sidebar-left">
-        <AttackScenarioPanel
-          selectedScenarios={selectedScenarios}
-          onScenariosChange={setSelectedScenarios}
-        />
+        <div className="security-sidebar-section">
+          <Palette />
+        </div>
+        <div className="security-sidebar-section">
+          <AttackScenarioPanel
+            selectedScenarios={selectedScenarios}
+            onScenariosChange={setSelectedScenarios}
+          />
+        </div>
       </div>
-      <div className="security-main">
+      <div className="security-main" onDrop={onDrop} onDragOver={onDragOver}>
         <div className="security-canvas-toolbar">
           <div className="toolbar-group">
             <button
@@ -300,6 +351,7 @@ function SecurityTestCanvas({
         <ReactFlow
           nodes={nodes}
           edges={edges}
+          nodeTypes={nodeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}

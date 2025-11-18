@@ -14,7 +14,12 @@ import ReactFlow, {
 import 'reactflow/dist/style.css'
 import { simApi, PowerflowResult } from '../api/simApi'
 import { ideApi } from '../api/ideApi'
+import CustomNode from './CustomNode'
 import './TopologyCanvas.css'
+
+const nodeTypes = {
+  default: CustomNode,
+}
 
 interface TopologyCanvasProps {
   onNodeSelect: (nodeId: string | null) => void
@@ -309,6 +314,7 @@ function TopologyCanvas({
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}

@@ -1,0 +1,26 @@
+.custom-node {
+  position: relative;
+  min-width: 120px;
+  text-align: center;
+}
+
+.node-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  word-break: break-word;
+  margin-bottom: 4px;
+}
+
+.node-type {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-top: 4px;
+  text-transform: capitalize;
+}
+
+.node-voltage {
+  font-size: 0.7rem;
+  color: #aaa;
+  margin-top: 2px;
+}
+

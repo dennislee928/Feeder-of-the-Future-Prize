@@ -10,6 +10,18 @@
   background-color: #2a2a2a;
   border-right: 1px solid #333;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.security-sidebar-section {
+  flex: 1;
+  overflow-y: auto;
+  border-bottom: 1px solid #333;
+}
+
+.security-sidebar-section:last-child {
+  border-bottom: none;
 }
 
 .security-main {
