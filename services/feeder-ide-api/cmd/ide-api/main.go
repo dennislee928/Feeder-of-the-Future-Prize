@@ -86,6 +86,11 @@ func main() {
 	// 設定 Gin router
 	router := gin.Default()
 
+	// Health check (必須在所有中間件之前定義，確保不被攔截)
+	router.GET("/health", func(c *gin.Context) {
+		c.JSON(200, gin.H{"status": "ok"})
+	})
+
 	// CORS middleware（開發環境用）
 	router.Use(func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
@@ -147,19 +152,16 @@ func main() {
 		}
 	}
 
-	// Health check
-	router.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{"status": "ok"})
-	})
-
 	// 啟動 server
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
 
-	log.Printf("Starting server on port %s", port)
-	if err := router.Run(":" + port); err != nil {
+	// Render 需要綁定到 0.0.0.0 才能檢測到端口
+	addr := "0.0.0.0:" + port
+	log.Printf("Starting server on %s", addr)
+	if err := router.Run(addr); err != nil {
 		log.Fatal("Failed to start server:", err)
 	}
 }
