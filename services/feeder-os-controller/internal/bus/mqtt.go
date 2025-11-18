@@ -104,3 +104,33 @@ func (b *MQTTBus) Close() error {
 	return nil
 }
 
+// NoOpBus 空操作 bus（用於 MQTT 不可用時）
+type NoOpBus struct{}
+
+// NewNoOpBus 創建一個空的 bus 實現
+func NewNoOpBus() *NoOpBus {
+	return &NoOpBus{}
+}
+
+// Publish 空實現
+func (b *NoOpBus) Publish(topic string, payload []byte) error {
+	log.Printf("Warning: MQTT not available, message to %s dropped", topic)
+	return nil
+}
+
+// Subscribe 空實現
+func (b *NoOpBus) Subscribe(topic string, handler MessageHandler) error {
+	log.Printf("Warning: MQTT not available, subscription to %s ignored", topic)
+	return nil
+}
+
+// Unsubscribe 空實現
+func (b *NoOpBus) Unsubscribe(topic string) error {
+	return nil
+}
+
+// Close 空實現
+func (b *NoOpBus) Close() error {
+	return nil
+}
+
