@@ -1,114 +1,39 @@
-# Binaries for programs and plugins
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-
-# Test binary, built with `go test -c`
-*.test
-
-# Output of the go coverage tool
-*.out
-
-# Dependency directories
-vendor/
+# Dependencies
 node_modules/
-
-# Go workspace file
-go.work
-
-# Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
+*.pyc
+*.pyo
+*.pyd
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-venv/
-env/
-ENV/
-.venv
-
-# IDEs
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-.DS_Store
 
 # Build outputs
-bin/
 dist/
 build/
-*.o
-*.a
-
-# Logs
-*.log
-logs/
+*.egg-info/
 
 # Environment variables
 .env
 .env.local
 .env.*.local
 
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
 # Docker
 .dockerignore
 
-# Kubernetes
-*.kubeconfig
-
 # Temporary files
-tmp/
-temp/
 *.tmp
-
-# OS files
-Thumbs.db
-.DS_Store
-
-# Certificates and keys (should not be committed)
-*.pem
-*.key
-*.crt
-*.cert
-*.p12
-*.pfx
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Coverage reports
-coverage/
-*.coverprofile
-htmlcov/
-.coverage
-
-# TypeScript
-*.tsbuildinfo
-
-# Next.js
-.next/
-out/
-
-# Vite
-dist-ssr/
-
+*.temp

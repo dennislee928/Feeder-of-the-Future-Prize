@@ -1,0 +1,87 @@
+# Render Blueprint Configuration
+# 注意：如果此 Blueprint 無法直接使用，請參考 deploy/RENDER_DEPLOYMENT.md 進行手動部署
+# Render Blueprint 格式可能因版本而異，建議使用 Render Dashboard 手動創建服務
+
+services:
+  - type: web
+    name: feeder-ide-frontend
+    dockerfilePath: ./frontend/ide-frontend/Dockerfile
+    dockerContext: ./frontend/ide-frontend
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://feeder-ide-api.onrender.com/api/v1
+      - key: VITE_SIM_API_BASE_URL
+        value: https://feeder-sim-engine.onrender.com
+    healthCheckPath: /
+    plan: starter
+
+  - type: web
+    name: feeder-ide-api
+    dockerfilePath: ./services/feeder-ide-api/Dockerfile
+    dockerContext: ./services/feeder-ide-api
+    envVars:
+      - key: PORT
+        value: "8080"
+    healthCheckPath: /health
+    plan: starter
+
+  - type: web
+    name: feeder-sim-engine
+    dockerfilePath: ./services/feeder-sim-engine/Dockerfile
+    dockerContext: ./services/feeder-sim-engine
+    healthCheckPath: /health
+    plan: starter
+
+  - type: web
+    name: feeder-os-controller
+    dockerfilePath: ./services/feeder-os-controller/Dockerfile
+    dockerContext: ./services/feeder-os-controller
+    envVars:
+      - key: PORT
+        value: "8082"
+      - key: MQTT_BROKER
+        value: your-mqtt-broker-url.com
+      - key: MQTT_PORT
+        value: "1883"
+      - key: MQTT_CLIENT_ID
+        value: feeder-os-controller
+    healthCheckPath: /health
+    plan: starter
+
+  - type: web
+    name: app-der-ev-orchestrator
+    dockerfilePath: ./services/apps/app-der-ev-orchestrator/Dockerfile
+    dockerContext: ./services/apps/app-der-ev-orchestrator
+    envVars:
+      - key: FEEDER_ID
+        value: feeder-001
+      - key: MQTT_BROKER
+        value: your-mqtt-broker-url.com
+      - key: MQTT_PORT
+        value: "1883"
+    healthCheckPath: /health
+    plan: starter
+
+  - type: web
+    name: app-rural-resilience
+    dockerfilePath: ./services/apps/app-rural-resilience/Dockerfile
+    dockerContext: ./services/apps/app-rural-resilience
+    healthCheckPath: /health
+    plan: starter
+
+  - type: web
+    name: security-gateway
+    dockerfilePath: ./services/security-fabric/security-gateway/Dockerfile
+    dockerContext: ./services/security-fabric/security-gateway
+    envVars:
+      - key: PORT
+        value: "8443"
+    healthCheckPath: /health
+    plan: starter
+
+  - type: web
+    name: telemetry-collector
+    dockerfilePath: ./services/security-fabric/telemetry-collector/Dockerfile
+    dockerContext: ./services/security-fabric/telemetry-collector
+    healthCheckPath: /health
+    plan: starter
