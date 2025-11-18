@@ -18,9 +18,16 @@ function AttackScenarioPanel({ selectedScenarios, onScenariosChange }: AttackSce
     const fetchScenarios = async () => {
       try {
         const data = await penetrationApi.getAvailableScenarios()
-        setScenarios(data)
+        if (data && Array.isArray(data) && data.length > 0) {
+          setScenarios(data)
+        } else {
+          console.warn('No attack scenarios returned from API')
+          setScenarios([])
+        }
       } catch (error) {
         console.error('Failed to fetch scenarios:', error)
+        // 即使 API 失敗，也設置為空數組，避免無限加載
+        setScenarios([])
       } finally {
         setLoading(false)
       }

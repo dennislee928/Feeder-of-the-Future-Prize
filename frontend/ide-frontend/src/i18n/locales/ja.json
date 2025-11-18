@@ -4,7 +4,8 @@
     "mode": {
       "design": "設計モード",
       "security": "セキュリティテスト",
-      "esg": "ESG/カーボンクレジット"
+      "esg": "ESG/カーボンクレジット",
+      "pricing": "料金プラン"
     }
   },
   "palette": {

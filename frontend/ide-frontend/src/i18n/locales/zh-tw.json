@@ -4,7 +4,8 @@
     "mode": {
       "design": "設計模式",
       "security": "安全測試",
-      "esg": "ESG/碳權模擬"
+      "esg": "ESG/碳權模擬",
+      "pricing": "付費方案"
     }
   },
   "palette": {
