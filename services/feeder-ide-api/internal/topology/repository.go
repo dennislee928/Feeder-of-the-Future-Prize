@@ -10,9 +10,12 @@ import (
 type Repository interface {
 	Create(topology *Topology) error
 	GetByID(id string) (*Topology, error)
+	GetByIDAndUserID(id string, userID *string) (*Topology, error) // 添加用戶ID檢查
 	Update(id string, topology *Topology) error
 	Delete(id string) error
 	List() ([]*Topology, error)
+	ListByUserID(userID *string) ([]*Topology, error) // 根據用戶ID列出拓樸
+	CountByUserID(userID *string) (int, error)        // 統計用戶拓樸數量
 }
 
 // InMemoryRepository 記憶體實作（開發用）
@@ -74,13 +77,56 @@ func (r *InMemoryRepository) Delete(id string) error {
 }
 
 func (r *InMemoryRepository) List() ([]*Topology, error) {
+	return r.ListByUserID(nil)
+}
+
+func (r *InMemoryRepository) GetByIDAndUserID(id string, userID *string) (*Topology, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+
+	topology, exists := r.topologies[id]
+	if !exists {
+		return nil, ErrTopologyNotFound
+	}
+
+	// 如果提供了 userID，檢查是否匹配
+	if userID != nil && topology.UserID != nil && *topology.UserID != *userID {
+		return nil, ErrTopologyNotFound
+	}
+
+	return topology, nil
+}
+
+func (r *InMemoryRepository) ListByUserID(userID *string) ([]*Topology, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 
 	topologies := make([]*Topology, 0, len(r.topologies))
 	for _, topology := range r.topologies {
-		topologies = append(topologies, topology)
+		// 如果提供了 userID，只返回匹配的拓樸
+		if userID == nil {
+			topologies = append(topologies, topology)
+		} else if topology.UserID != nil && *topology.UserID == *userID {
+			topologies = append(topologies, topology)
+		}
 	}
 	return topologies, nil
+}
+
+func (r *InMemoryRepository) CountByUserID(userID *string) (int, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+
+	count := 0
+	for _, topology := range r.topologies {
+		if userID == nil {
+			if topology.UserID == nil {
+				count++
+			}
+		} else if topology.UserID != nil && *topology.UserID == *userID {
+			count++
+		}
+	}
+	return count, nil
 }
 

@@ -14,6 +14,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css'
 import { ideApi } from '../api/ideApi'
 import { esgApi, ESGCalculationResult } from '../api/esgApi'
+import { useFeaturePermission } from '../hooks/useFeaturePermission'
 import ESGCalculationPanel from './ESGCalculationPanel'
 import ESGReportPanel from './ESGReportPanel'
 import Palette from './Palette'
@@ -43,11 +44,15 @@ function ESGSimulationCanvas({
   onTopologyIdChange,
 }: ESGSimulationCanvasProps) {
   const { t } = useTranslation()
+  const { canUseFeature } = useFeaturePermission()
   const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isCalculating, setIsCalculating] = useState(false)
   const [esgResult, setEsgResult] = useState<ESGCalculationResult | null>(null)
+  
+  // ESG 功能需要註冊會員（免費或付費）
+  const canUseESG = canUseFeature('advanced_security') // 使用相同的權限檢查
   const [parameters, setParameters] = useState<ESGParameters>({
     time_hours: 24,
     ev_charging_hours: 4,
@@ -167,6 +172,12 @@ function ESGSimulationCanvas({
       return
     }
 
+    // 檢查是否可以使用 ESG 功能（需要註冊會員）
+    if (!canUseESG) {
+      alert(t('esg.feature_locked'))
+      return
+    }
+
     setIsCalculating(true)
     try {
       const topology = {
@@ -198,7 +209,7 @@ function ESGSimulationCanvas({
     } finally {
       setIsCalculating(false)
     }
-  }, [nodes, edges, parameters, t])
+  }, [nodes, edges, parameters, canUseESG, t])
 
   // 根據 ESG 結果更新節點視覺化
   useEffect(() => {

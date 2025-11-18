@@ -15,6 +15,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css'
 import { ideApi } from '../api/ideApi'
 import { penetrationApi, PenetrationTestResult } from '../api/penetrationApi'
+import { useFeaturePermission } from '../hooks/useFeaturePermission'
 import AttackScenarioPanel from './AttackScenarioPanel'
 import SecurityReportPanel from './SecurityReportPanel'
 import Palette from './Palette'
@@ -37,12 +38,16 @@ function SecurityTestCanvas({
   onTopologyIdChange,
 }: SecurityTestCanvasProps) {
   const { t } = useTranslation()
+  const { canUseFeature } = useFeaturePermission()
   const [nodes, setNodes, onNodesChange] = useNodesState([])
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isRunningTest, setIsRunningTest] = useState(false)
   const [selectedScenarios, setSelectedScenarios] = useState<string[]>([])
   const [testResult, setTestResult] = useState<PenetrationTestResult | null>(null)
+  
+  // 檢查是否可以使用進階資安功能
+  const canUseAdvancedSecurity = canUseFeature('advanced_security')
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -161,6 +166,12 @@ function SecurityTestCanvas({
       return
     }
 
+    // 檢查是否可以使用進階資安功能
+    if (!canUseAdvancedSecurity) {
+      alert(t('security.feature_locked'))
+      return
+    }
+
     setIsRunningTest(true)
     try {
       const topology = {
@@ -191,7 +202,7 @@ function SecurityTestCanvas({
     } finally {
       setIsRunningTest(false)
     }
-  }, [nodes, edges, selectedScenarios, t])
+  }, [nodes, edges, selectedScenarios, canUseAdvancedSecurity, t])
 
   // 根據測試結果更新節點和線路視覺化
   useEffect(() => {

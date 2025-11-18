@@ -33,6 +33,8 @@
     "no_topology": "No topology available to load",
     "load_failed": "Load failed, please check network connection",
     "save_failed": "Save failed, please check network connection",
+    "quota_exceeded": "Topology quota exceeded (used {{used}} / max {{max}}), please upgrade or delete old topologies",
+    "simulation_quota_exceeded": "Daily simulation quota exceeded, please upgrade or try again tomorrow",
     "average_voltage": "Average Voltage",
     "max_line_loading": "Max Line Loading"
   },
@@ -58,6 +60,7 @@
     "add_nodes_first": "Please add nodes to canvas first",
     "select_scenarios": "Please select at least one attack scenario",
     "test_failed": "Penetration test failed, please check network connection and service status",
+    "feature_locked": "This feature requires registration, please login first",
     "loading": "Loading...",
     "load_topology": "Load Topology",
     "running": "Running...",
@@ -114,6 +117,7 @@
     "load_failed": "Load failed, please check network connection",
     "add_nodes_first": "Please add nodes to canvas first",
     "calculation_failed": "ESG calculation failed, please check network connection and service status",
+    "feature_locked": "This feature requires registration, please login first",
     "loading": "Loading...",
     "load_topology": "Load Topology",
     "calculating": "Calculating...",
@@ -148,6 +152,102 @@
         "medium": "Medium",
         "low": "Low"
       }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "description": "Sign in with Google or GitHub to access advanced features",
+      "button": "Login",
+      "google": "Sign in with Google",
+      "github": "Sign in with GitHub",
+      "loading": "Redirecting to login page...",
+      "failed": "Login failed, please try again"
+    },
+    "logout": "Logout",
+    "tier": {
+      "label": "Membership Tier",
+      "demo": "Demo User",
+      "free": "Free Member",
+      "premium": "Premium Member"
+    },
+    "quota": {
+      "topologies": "Topologies",
+      "simulations": "Daily Simulations"
+    },
+    "subscription": {
+      "expires": "Subscription Expires"
+    }
+  },
+  "app": {
+    "mode": {
+      "pricing": "Pricing"
+    }
+  },
+  "payment": {
+    "plans": {
+      "title": "Choose Your Plan",
+      "description": "Select the plan that best fits your needs",
+      "popular": "Popular",
+      "current_plan": "Current Plan",
+      "pay_with_stripe": "Pay with Stripe",
+      "pay_with_paypal": "Pay with PayPal",
+      "free": {
+        "name": "Free Member",
+        "price": "Free",
+        "features": {
+          "unlimited_topologies": "Unlimited Topologies",
+          "all_simulations": "All Simulation Features",
+          "basic_3d": "Basic 3D Rendering",
+          "basic_ai": "Basic AI Prediction",
+          "advanced_security": "Advanced Security Simulation"
+        }
+      },
+      "premium": {
+        "name": "Premium Member",
+        "price": "$29/month",
+        "features": {
+          "all_free": "All Free Member Features",
+          "api_access": "API Access",
+          "priority_support": "Priority Support",
+          "advanced_3d": "Advanced 3D Rendering",
+          "advanced_ai": "Advanced AI Prediction",
+          "bulk_export": "Bulk Export/Import",
+          "collaboration": "Collaboration Features"
+        }
+      }
+    },
+    "checkout": {
+      "title": "Confirm Payment",
+      "plan": "Plan",
+      "provider": "Payment Provider",
+      "cancel": "Cancel",
+      "confirm": "Confirm Payment",
+      "processing": "Processing...",
+      "failed": "Payment failed, please try again",
+      "paypal_redirect": "Redirecting to PayPal..."
+    },
+    "history": {
+      "title": "Payment History",
+      "loading": "Loading...",
+      "load_failed": "Failed to load",
+      "empty": "No payment history",
+      "date": "Date",
+      "amount": "Amount",
+      "provider": "Provider",
+      "status": "Status"
+    },
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    }
+  },
+  "demo": {
+    "banner": {
+      "text": "You are using Demo mode (max 3 topologies, basic features). Login to access full features!",
+      "login": "Login Now"
     }
   }
 }

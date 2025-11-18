@@ -1,0 +1,145 @@
+.pricing-plans {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing-plans-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.pricing-plans-description {
+  text-align: center;
+  color: #666;
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+}
+
+.pricing-plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pricing-plan {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.pricing-plan:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.pricing-plan.popular {
+  border-color: #4285f4;
+  box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2);
+}
+
+.pricing-plan.current {
+  border-color: #34a853;
+  background: #f0f8f0;
+}
+
+.pricing-plan-badge {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: #4285f4;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.pricing-plan-header {
+  margin-bottom: 1.5rem;
+}
+
+.pricing-plan-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.pricing-plan-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4285f4;
+}
+
+.pricing-plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.pricing-plan-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.feature-icon {
+  width: 20px;
+  height: 20px;
+  color: #34a853;
+  flex-shrink: 0;
+}
+
+.pricing-plan-current {
+  text-align: center;
+  padding: 1rem;
+  background: #34a853;
+  color: white;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.pricing-plan-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pricing-plan-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pricing-plan-button-stripe {
+  background: #635bff;
+  color: white;
+}
+
+.pricing-plan-button-stripe:hover {
+  background: #5851ea;
+}
+
+.pricing-plan-button-paypal {
+  background: #0070ba;
+  color: white;
+}
+
+.pricing-plan-button-paypal:hover {
+  background: #005ea6;
+}
+

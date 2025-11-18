@@ -4,18 +4,24 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/feeder-platform/feeder-ide-api/internal/auth"
 	"github.com/feeder-platform/feeder-ide-api/internal/topology"
+	"github.com/feeder-platform/feeder-ide-api/internal/user"
 	"github.com/gin-gonic/gin"
 )
 
 // TopologyHandler 處理拓樸相關的 HTTP 請求
 type TopologyHandler struct {
-	repo topology.Repository
+	repo        topology.Repository
+	userService *user.Service
 }
 
 // NewTopologyHandler 建立新的 TopologyHandler
-func NewTopologyHandler(repo topology.Repository) *TopologyHandler {
-	return &TopologyHandler{repo: repo}
+func NewTopologyHandler(repo topology.Repository, userService *user.Service) *TopologyHandler {
+	return &TopologyHandler{
+		repo:        repo,
+		userService: userService,
+	}
 }
 
 // CreateTopologyRequest 建立拓樸的請求
@@ -44,7 +50,26 @@ func (h *TopologyHandler) CreateTopology(c *gin.Context) {
 		return
 	}
 
+	// 檢查配額（如果 userService 可用）
+	userID := auth.GetUserID(c)
+	if h.userService != nil {
+		canCreate, used, max, err := h.userService.CheckTopologyQuota(userID)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check quota: " + err.Error()})
+			return
+		}
+		if !canCreate {
+			c.JSON(http.StatusForbidden, gin.H{
+				"error": "Topology quota exceeded",
+				"used": used,
+				"max":  max,
+			})
+			return
+		}
+	}
+
 	topo := &topology.Topology{
+		UserID:      userID, // 設置用戶ID（如果已登入）
 		Name:        req.Name,
 		Description: req.Description,
 		ProfileType: req.ProfileType,
@@ -73,8 +98,10 @@ func (h *TopologyHandler) CreateTopology(c *gin.Context) {
 // @Router /api/v1/topologies/{id} [get]
 func (h *TopologyHandler) GetTopology(c *gin.Context) {
 	id := c.Param("id")
+	userID := auth.GetUserID(c)
 
-	topo, err := h.repo.GetByID(id)
+	// 使用 GetByIDAndUserID 確保用戶只能訪問自己的拓樸（或 demo 拓樸）
+	topo, err := h.repo.GetByIDAndUserID(id, userID)
 	if err != nil {
 		if err == topology.ErrTopologyNotFound {
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
@@ -110,6 +137,7 @@ type UpdateTopologyRequest struct {
 // @Router /api/v1/topologies/{id} [put]
 func (h *TopologyHandler) UpdateTopology(c *gin.Context) {
 	id := c.Param("id")
+	userID := auth.GetUserID(c)
 
 	var req UpdateTopologyRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -117,8 +145,8 @@ func (h *TopologyHandler) UpdateTopology(c *gin.Context) {
 		return
 	}
 
-	// 取得現有拓樸
-	existing, err := h.repo.GetByID(id)
+	// 取得現有拓樸（檢查權限）
+	existing, err := h.repo.GetByIDAndUserID(id, userID)
 	if err != nil {
 		if err == topology.ErrTopologyNotFound {
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
@@ -164,12 +192,26 @@ func (h *TopologyHandler) UpdateTopology(c *gin.Context) {
 // @Router /api/v1/topologies/{id} [delete]
 func (h *TopologyHandler) DeleteTopology(c *gin.Context) {
 	id := c.Param("id")
+	userID := auth.GetUserID(c)
 
-	if err := h.repo.Delete(id); err != nil {
+	// 檢查權限：確保用戶只能刪除自己的拓樸
+	existing, err := h.repo.GetByIDAndUserID(id, userID)
+	if err != nil {
 		if err == topology.ErrTopologyNotFound {
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 			return
 		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// 確保是該用戶的拓樸（demo 模式允許刪除無 userID 的拓樸）
+	if userID != nil && existing.UserID != nil && *existing.UserID != *userID {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Not authorized to delete this topology"})
+		return
+	}
+
+	if err := h.repo.Delete(id); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -185,7 +227,10 @@ func (h *TopologyHandler) DeleteTopology(c *gin.Context) {
 // @Success 200 {array} topology.Topology
 // @Router /api/v1/topologies [get]
 func (h *TopologyHandler) ListTopologies(c *gin.Context) {
-	topologies, err := h.repo.List()
+	userID := auth.GetUserID(c)
+
+	// 根據用戶ID列出拓樸
+	topologies, err := h.repo.ListByUserID(userID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
