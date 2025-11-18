@@ -15,12 +15,21 @@ func main() {
 	// 載入配置
 	cfg := config.Load()
 
-	// 初始化 MQTT bus
-	mqttBus, err := bus.NewMQTTBus(cfg.MQTT)
+	// 初始化 MQTT bus（允許失敗，服務仍可啟動）
+	var mqttBus bus.Bus
+	var err error
+	mqttBus, err = bus.NewMQTTBus(cfg.MQTT)
 	if err != nil {
-		log.Fatal("Failed to initialize MQTT bus:", err)
+		log.Printf("Warning: Failed to initialize MQTT bus: %v. Service will continue without MQTT functionality.", err)
+		// 創建一個空的 bus 實現，避免 nil pointer
+		mqttBus = bus.NewNoOpBus()
 	}
-	defer mqttBus.Close()
+	// 確保在程序退出時關閉 bus
+	defer func() {
+		if mqttBus != nil {
+			mqttBus.Close()
+		}
+	}()
 
 	// 初始化 app manager
 	appManager := apps.NewManager(mqttBus, cfg)
