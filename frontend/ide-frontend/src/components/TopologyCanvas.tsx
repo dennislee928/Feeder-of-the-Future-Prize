@@ -91,7 +91,7 @@ function TopologyCanvas({
 
       setNodes((nds) => nds.concat(newNode))
     },
-    [setNodes]
+    [setNodes, t]
   )
 
   const onDragOver = useCallback((event: React.DragEvent) => {
