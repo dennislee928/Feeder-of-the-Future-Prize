@@ -37,3 +37,13 @@ logs/
 # Temporary files
 *.tmp
 *.temp
+<<<<<<< Updated upstream
+=======
+scripts/README_DOCKER_BUILD.md
+scripts/build-and-push-docker.sh
+scripts/build-and-push-docker.ps1
+scripts/build-and-push-docker.sh
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.cursor\rules\snyk_rules.mdc
+>>>>>>> Stashed changes
