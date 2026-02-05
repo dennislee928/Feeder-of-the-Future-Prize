@@ -1,6 +1,11 @@
 # Render Blueprint Configuration
 # 注意：如果此 Blueprint 無法直接使用，請參考 deploy/RENDER_MANUAL_SETUP.md 進行手動部署
 # Render 會自動設置 PORT 環境變數，所有服務已配置為使用 PORT
+# 所有服務與資料庫均使用 free plan
+
+databases:
+  - name: feeder-postgres
+    plan: free
 
 services:
   - type: web
@@ -14,7 +19,7 @@ services:
       - key: VITE_SIM_API_BASE_URL
         value: https://feeder-sim-engine.onrender.com
     healthCheckPath: /
-    plan: starter
+    plan: free
 
   - type: web
     name: feeder-ide-api
@@ -24,8 +29,12 @@ services:
     envVars:
       - key: PORT
         value: "8080"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: feeder-postgres
+          property: connectionString
     healthCheckPath: /health
-    plan: starter
+    plan: free
 
   - type: web
     name: feeder-sim-engine
@@ -33,7 +42,7 @@ services:
     dockerfilePath: ./services/feeder-sim-engine/Dockerfile
     dockerContext: ./services/feeder-sim-engine
     healthCheckPath: /health
-    plan: starter
+    plan: free
 
   - type: web
     name: feeder-os-controller
@@ -50,7 +59,7 @@ services:
       - key: MQTT_CLIENT_ID
         value: feeder-os-controller
     healthCheckPath: /health
-    plan: starter
+    plan: free
 
   - type: web
     name: app-der-ev-orchestrator
@@ -65,7 +74,7 @@ services:
       - key: MQTT_PORT
         value: "1883"
     healthCheckPath: /health
-    plan: starter
+    plan: free
 
   - type: web
     name: app-rural-resilience
@@ -73,7 +82,7 @@ services:
     dockerfilePath: ./services/apps/app-rural-resilience/Dockerfile
     dockerContext: ./services/apps/app-rural-resilience
     healthCheckPath: /health
-    plan: starter
+    plan: free
 
   - type: web
     name: security-gateway
@@ -84,7 +93,7 @@ services:
       - key: PORT
         value: "8443"
     healthCheckPath: /health
-    plan: starter
+    plan: free
 
   - type: web
     name: telemetry-collector
@@ -92,4 +101,4 @@ services:
     dockerfilePath: ./services/security-fabric/telemetry-collector/Dockerfile
     dockerContext: ./services/security-fabric/telemetry-collector
     healthCheckPath: /health
-    plan: starter
+    plan: free
