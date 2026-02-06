@@ -180,11 +180,6 @@
       "expires": "Subscription Expires"
     }
   },
-  "app": {
-    "mode": {
-      "pricing": "Pricing"
-    }
-  },
   "payment": {
     "plans": {
       "title": "Choose Your Plan",

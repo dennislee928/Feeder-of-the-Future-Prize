@@ -12,6 +12,7 @@ i18n
   .init({
     resources: {
       'zh-TW': { translation: zhTW },
+      zh: { translation: zhTW },
       'en': { translation: en },
       'ja': { translation: ja },
     },

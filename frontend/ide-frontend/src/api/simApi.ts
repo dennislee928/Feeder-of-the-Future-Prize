@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // 在 Render 上，使用環境變數
 const SIM_API_BASE_URL = import.meta.env.VITE_SIM_API_BASE_URL || 
-  (import.meta.env.MODE === 'production' ? 'https://feeder-sim-engine.onrender.com' : 'http://localhost:8081')
+  (import.meta.env.MODE === 'production' ? 'https://feeder-sim-engine-fnvf.onrender.com' : 'http://localhost:8081')
 
 const simApiClient = axios.create({
   baseURL: SIM_API_BASE_URL,

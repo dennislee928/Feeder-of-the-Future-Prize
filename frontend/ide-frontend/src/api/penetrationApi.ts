@@ -3,7 +3,7 @@ import axios from 'axios'
 // 在 Render 上，使用環境變數
 // 如果沒有設置環境變數，開發環境使用 localhost，生產環境使用空字符串（相對路徑）
 const SIM_API_BASE_URL = import.meta.env.VITE_SIM_API_BASE_URL || 
-  (import.meta.env.MODE === 'production' ? 'https://feeder-sim-engine.onrender.com' : 'http://localhost:8081')
+  (import.meta.env.MODE === 'production' ? 'https://feeder-sim-engine-fnvf.onrender.com' : 'http://localhost:8081')
 
 const penetrationApiClient = axios.create({
   baseURL: SIM_API_BASE_URL,

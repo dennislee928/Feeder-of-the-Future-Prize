@@ -30,38 +30,70 @@ mqtt_client = None
 control_loop = None
 
 
+def _sync_mqtt_connect(broker: str, port: int, feeder_id: str) -> MQTTClient:
+    """同步 MQTT 連線，供 asyncio.to_thread 使用，避免阻塞 event loop"""
+    import json
+    import paho.mqtt.client as mqtt
+    client = MQTTClient(broker, port, feeder_id)
+    client.client = mqtt.Client(client_id=f"der-ev-orchestrator-{feeder_id}")
+
+    def on_connect(c, u, f, rc):
+        if rc == 0:
+            print(f"MQTT connected to {broker}:{port}")
+        else:
+            print(f"MQTT connection failed: {rc}")
+
+    def on_message(c, u, msg):
+        topic = msg.topic
+        if topic in client.subscriptions:
+            try:
+                payload = json.loads(msg.payload.decode())
+                client.subscriptions[topic](topic, payload)
+            except Exception as e:
+                print(f"Error processing message: {e}")
+
+    client.client.on_connect = on_connect
+    client.client.on_message = on_message
+    client.client.connect(broker, port, 60)
+    client.client.loop_start()
+    return client
+
+
 @app.on_event("startup")
 async def startup():
-    """啟動時初始化 MQTT 和 control loop"""
+    """啟動時初始化 MQTT 和 control loop（非阻塞，避免 Render 部署時 No open ports）"""
     global mqtt_client, control_loop
-    
-    feeder_id = os.getenv("FEEDER_ID", "feeder-001")
-    mqtt_broker = os.getenv("MQTT_BROKER", "mqtt")  # 使用服務名稱
-    mqtt_port = int(os.getenv("MQTT_PORT", "1883"))
-    
-    # 重試連接 MQTT
-    max_retries = 10
-    retry_delay = 2
-    for i in range(max_retries):
-        try:
-            mqtt_client = MQTTClient(mqtt_broker, mqtt_port, feeder_id)
-            await mqtt_client.connect()
-            print(f"Successfully connected to MQTT broker at {mqtt_broker}:{mqtt_port}")
-            break
-        except Exception as e:
-            if i < max_retries - 1:
-                print(f"Failed to connect to MQTT broker (attempt {i+1}/{max_retries}): {e}")
-                print(f"Retrying in {retry_delay} seconds...")
-                await asyncio.sleep(retry_delay)
-            else:
-                print(f"Failed to connect to MQTT broker after {max_retries} attempts. Continuing without MQTT...")
-                mqtt_client = None
-    
-    if mqtt_client:
-        control_loop = ControlLoop(registry, mqtt_client, feeder_id)
-        asyncio.create_task(control_loop.run())
-    else:
-        print("Warning: Control loop not started due to MQTT connection failure")
+
+    async def init_mqtt_and_loop():
+        global mqtt_client, control_loop
+        feeder_id = os.getenv("FEEDER_ID", "feeder-001")
+        mqtt_broker = os.getenv("MQTT_BROKER", "mqtt")
+        mqtt_port = int(os.getenv("MQTT_PORT", "1883"))
+
+        max_retries = 10
+        retry_delay = 2
+        for i in range(max_retries):
+            try:
+                # 在執行緒中執行 MQTT 連線，避免阻塞 event loop 導致 Render 無法偵測 port
+                mqtt_client = await asyncio.to_thread(_sync_mqtt_connect, mqtt_broker, mqtt_port, feeder_id)
+                print(f"Successfully connected to MQTT broker at {mqtt_broker}:{mqtt_port}")
+                break
+            except Exception as e:
+                if i < max_retries - 1:
+                    print(f"Failed to connect to MQTT broker (attempt {i+1}/{max_retries}): {e}")
+                    await asyncio.sleep(retry_delay)
+                else:
+                    print(f"Failed to connect to MQTT broker after {max_retries} attempts. Continuing without MQTT...")
+                    mqtt_client = None
+
+        if mqtt_client:
+            control_loop = ControlLoop(registry, mqtt_client, feeder_id)
+            asyncio.create_task(control_loop.run())
+        else:
+            print("Warning: Control loop not started due to MQTT connection failure")
+
+    # 背景執行，不阻塞 startup 完成，讓 uvicorn 可立即 bind port
+    asyncio.create_task(init_mqtt_and_loop())
 
 
 @app.on_event("shutdown")

@@ -7,6 +7,7 @@ import ESGSimulationCanvas from './components/ESGSimulationCanvas'
 import Palette from './components/Palette'
 import PropertiesPanel from './components/PropertiesPanel'
 import LanguageSwitcher from './components/LanguageSwitcher'
+import { FeatureUnlockInput } from './components/FeatureUnlockInput'
 import LoginModal from './components/Auth/LoginModal'
 import UserProfile from './components/Auth/UserProfile'
 import PricingPlans from './components/Payment/PricingPlans'
@@ -76,6 +77,7 @@ function App() {
               {t('auth.login.button')}
             </button>
           )}
+          <FeatureUnlockInput />
           <LanguageSwitcher />
         </div>
       </div>

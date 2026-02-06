@@ -1,0 +1,24 @@
+.feature-unlock-input {
+  width: 100px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background: #2a2a2a;
+  color: #ccc;
+}
+
+.feature-unlock-input::placeholder {
+  color: #666;
+}
+
+.feature-unlock-input:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.feature-unlock-badge {
+  font-size: 0.75rem;
+  color: #4caf50;
+  padding: 2px 6px;
+}

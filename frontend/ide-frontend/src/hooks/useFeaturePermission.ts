@@ -1,11 +1,18 @@
 import { useAuth } from '../contexts/AuthContext'
+import { useFeatureUnlock } from '../contexts/FeatureUnlockContext'
 
 export type Feature = '3d_rendering' | 'ai_prediction' | 'advanced_security' | 'api_access'
 
 export const useFeaturePermission = () => {
   const { user, quota } = useAuth()
+  const { isUnlocked } = useFeatureUnlock()
 
   const canUseFeature = (feature: Feature): boolean => {
+    // 解鎖碼 mitake@123 可開啟所有功能
+    if (isUnlocked) {
+      return true
+    }
+
     // Demo 模式（未登入）功能限制
     if (!user) {
       switch (feature) {
@@ -47,6 +54,9 @@ export const useFeaturePermission = () => {
   }
 
   const canCreateTopology = (): { canCreate: boolean; used: number; max: number } => {
+    if (isUnlocked) {
+      return { canCreate: true, used: 0, max: Infinity }
+    }
     if (!user) {
       // Demo 模式：最多 3 個拓樸
       return { canCreate: true, used: 0, max: 3 }
@@ -65,6 +75,9 @@ export const useFeaturePermission = () => {
   }
 
   const canRunSimulation = (): boolean => {
+    if (isUnlocked) {
+      return true
+    }
     if (!user) {
       // Demo 模式：允許模擬
       return true

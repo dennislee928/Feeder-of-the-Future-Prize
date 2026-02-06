@@ -15,9 +15,9 @@ services:
     dockerContext: ./frontend/ide-frontend
     envVars:
       - key: VITE_API_BASE_URL
-        value: https://feeder-ide-api.onrender.com/api/v1
+        value: https://feeder-ide-api-d2na.onrender.com/api/v1
       - key: VITE_SIM_API_BASE_URL
-        value: https://feeder-sim-engine.onrender.com
+        value: https://feeder-sim-engine-fnvf.onrender.com
     healthCheckPath: /
     plan: free
 
@@ -67,6 +67,8 @@ services:
     dockerfilePath: ./services/apps/app-der-ev-orchestrator/Dockerfile
     dockerContext: ./services/apps/app-der-ev-orchestrator
     envVars:
+      - key: PORT
+        value: "10000"
       - key: FEEDER_ID
         value: feeder-001
       - key: MQTT_BROKER
@@ -81,6 +83,9 @@ services:
     runtime: docker
     dockerfilePath: ./services/apps/app-rural-resilience/Dockerfile
     dockerContext: ./services/apps/app-rural-resilience
+    envVars:
+      - key: PORT
+        value: "10000"
     healthCheckPath: /health
     plan: free
 
@@ -100,5 +105,8 @@ services:
     runtime: docker
     dockerfilePath: ./services/security-fabric/telemetry-collector/Dockerfile
     dockerContext: ./services/security-fabric/telemetry-collector
+    envVars:
+      - key: PORT
+        value: "10000"
     healthCheckPath: /health
     plan: free

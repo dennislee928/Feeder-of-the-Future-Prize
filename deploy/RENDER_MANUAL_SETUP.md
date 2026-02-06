@@ -29,7 +29,7 @@
    - **Plan**: `Starter` ($7/月) 或 `Free` (測試用)
 4. 環境變數（**先設置臨時值，部署後端後再更新**）：
    - `VITE_API_BASE_URL`: `https://feeder-ide-api.onrender.com/api/v1`
-   - `VITE_SIM_API_BASE_URL`: `https://feeder-sim-engine.onrender.com`
+   - `VITE_SIM_API_BASE_URL`: `https://feeder-sim-engine-fnvf.onrender.com`
 5. 點擊 "Create Web Service"
 
 ### 2. Feeder IDE API (feeder-ide-api)

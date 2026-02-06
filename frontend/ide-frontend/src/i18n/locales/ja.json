@@ -178,11 +178,6 @@
       "expires": "サブスクリプション有効期限"
     }
   },
-  "app": {
-    "mode": {
-      "pricing": "料金プラン"
-    }
-  },
   "payment": {
     "plans": {
       "title": "プランを選択",

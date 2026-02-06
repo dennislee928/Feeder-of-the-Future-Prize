@@ -48,7 +48,7 @@ Render 會為每個服務分配不同的 URL。需要更新環境變數以指向
    - Docker Context: `./frontend/ide-frontend`
    - Environment Variables:
      - `VITE_API_BASE_URL`: `https://feeder-ide-api.onrender.com/api/v1`
-     - `VITE_SIM_API_BASE_URL`: `https://feeder-sim-engine.onrender.com`
+     - `VITE_SIM_API_BASE_URL`: `https://feeder-sim-engine-fnvf.onrender.com`
 
 2. **Feeder IDE API**
    - Type: Web Service

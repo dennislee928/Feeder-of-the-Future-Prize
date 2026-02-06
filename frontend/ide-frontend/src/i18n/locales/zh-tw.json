@@ -180,11 +180,6 @@
       "expires": "訂閱到期日"
     }
   },
-  "app": {
-    "mode": {
-      "pricing": "付費方案"
-    }
-  },
   "payment": {
     "plans": {
       "title": "選擇您的方案",
