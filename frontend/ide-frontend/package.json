@@ -11,7 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "axios": "^1.6.2",
+    "axios": "^1.20.0",
     "i18next": "^25.6.2",
     "i18next-browser-languagedetector": "^8.2.0",
     "react": "^18.2.0",
@@ -30,6 +30,24 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^6.4.4"
+  },
+  "overrides": {
+    "brace-expansion": "^2.1.7",
+    "js-yaml": "^4.3.2",
+    "postcss": "^8.5.23",
+    "minimatch": "^11.0.1",
+    "nanoid": "^3.3.18",
+    "browserslist": "^4.28.7",
+    "flatted": "^3.4.2",
+    "picomatch": "^2.3.2",
+    "form-data": "^4.0.6",
+    "rollup": "^4.59.0",
+    "source-map-js": "^1.2.2",
+    "ajv": "^6.14.0",
+    "baseline-browser-mapping": "^2.11.0",
+    "esbuild": "^0.25.0",
+    "follow-redirects": "^1.16.0",
+    "@babel/core": "^7.29.6"
   }
 }
