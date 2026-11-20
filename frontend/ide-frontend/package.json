@@ -42,6 +42,7 @@
     "flatted": "^3.4.2",
     "picomatch": "^2.3.2",
     "form-data": "^4.0.6",
-    "rollup": "^4.59.0"
+    "rollup": "^4.59.0",
+    "source-map-js": "^1.2.2"
   }
 }
