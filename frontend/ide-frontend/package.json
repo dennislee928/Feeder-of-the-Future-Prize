@@ -33,6 +33,7 @@
     "vite": "^6.4.4"
   },
   "overrides": {
-    "brace-expansion": "^2.1.7"
+    "brace-expansion": "^2.1.7",
+    "js-yaml": "^4.3.2"
   }
 }
